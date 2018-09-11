@@ -1,23 +1,37 @@
 <template>
+
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div id="scroll-animate-main">
+      <div class="wrapper-parallax">
+        <hea></hea>
+
+        <section class="content">
+          <router-view/>
+        </section>
+
+        <foo></foo>
+      </div>
+    </div>
   </div>
 </template>
 
+
 <script>
-export default {
-  name: 'App'
-}
+  import Foo from './components/MyFooter.vue'
+  import Hea from './components/MyHeader.vue'
+
+  export default {
+    name: 'App',
+      components: {
+        Foo,
+        Hea,
+    }
+  }
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import "../static/css/materialize.css";
+  @import "../static/css/style.css";
+  @import url('https://fonts.googleapis.com/css?family=Material+Icons');
 </style>
