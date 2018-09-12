@@ -5,9 +5,9 @@
       <div class="wrapper-parallax">
         <hea></hea>
 
-        <section class="content">
+        <div class="container">
           <router-view/>
-        </section>
+        </div>
 
         <foo></foo>
       </div>
@@ -31,7 +31,5 @@
 </script>
 
 <style>
-  @import "../static/css/materialize.css";
-  @import "../static/css/style.css";
-  @import url('https://fonts.googleapis.com/css?family=Material+Icons');
+
 </style>
