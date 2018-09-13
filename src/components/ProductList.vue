@@ -3,21 +3,7 @@
     <div class="section">
       <div class="row">
         <div class="col s12 m6 l4" v-for="p in products">
-          <div class="card">
-            <div class="card-image">
-              <img src="https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/m5g458pdbmvl0rubcsj0/meskie-buty-do-biegania-free-rn-2018-6Rd50P.jpg">
-              <span class="card-title">{{p.name}}</span>
-              <a class="btn-floating halfway-fab waves-effect waves-light">
-                <i class="material-icons">add_shopping_cart</i>
-              </a>
-            </div>
-            <div class="card-content">
-              <p>{{p.description}}</p>
-              <h6 class="price">
-                {{p.price}} zł
-              </h6>
-            </div>
-          </div>
+          <product-card :p_name="p.name" :p_description="p.description" :p_price="p.price" :p_image="p.image"></product-card>
         </div>
       </div>
     </div>
@@ -42,6 +28,7 @@
 </template>
 
 <script>
+  import ProductCard from './ProductCard.vue'
   import axios from 'axios';
   export default {
     name: 'ProductList',
@@ -50,6 +37,9 @@
         products: [],
         errors: []
       }
+    },
+    components: {
+      ProductCard,
     },
 
     // Fetches posts when the component is created.
@@ -63,7 +53,7 @@
           'Postman-Token': 'f12715bc-c2b9-4a76-9aae-b19d0f281bb0'}});
 
       api
-        .get(`/products2`, {
+        .get(`/products`, {
         })
         .then(response => {
           this.products = response.data;
@@ -80,11 +70,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.price{
-  text-align: right;
-}
-.card .card-image .card-title{
-  color: teal;
-}
 
 </style>

@@ -4,6 +4,8 @@ import Home from '@/components/Home'
 import ProductDetail from '@/components/ProductDetail'
 import ProductList from '@/components/ProductList'
 import UserAccount from '@/components/UserAccount'
+import ShoppingCart from '@/components/ShoppingCart'
+
 
 
 
@@ -11,6 +13,7 @@ import UserAccount from '@/components/UserAccount'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -31,6 +34,11 @@ export default new Router({
       path: '/account',
       name: 'User Account',
       component: UserAccount
+    },
+    {
+      path: '/cart',
+      name: 'Shopping Cart',
+      component: ShoppingCart
     }
   ]
 })
