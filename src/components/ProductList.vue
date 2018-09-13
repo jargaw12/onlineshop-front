@@ -1,5 +1,26 @@
 <template>
   <div class="productList">
+    <form action="#">
+      <p>
+        <label>
+          <input type="checkbox" class="filled-in" />
+          <span>0-160</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="checkbox" class="filled-in" />
+          <span>161-220</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="checkbox" class="filled-in" />
+          <span>221-300</span>
+        </label>
+      </p>
+    </form>
+
     <div class="section">
       <div class="row">
         <div class="col s12 m6 l4" v-for="p in products">
@@ -34,6 +55,11 @@
     name: 'ProductList',
     data() {
       return {
+        filters:{
+          orderBy: '',
+          showPostsPerPage: 2,
+          filterBy: 'someCategory'
+        },
         products: [],
         errors: []
       }
@@ -41,8 +67,6 @@
     components: {
       ProductCard,
     },
-
-    // Fetches posts when the component is created.
     created() {
       console.log('create');
       const api = axios.create({
@@ -64,6 +88,15 @@
           console.log("Error: " + e);
           this.errors.push(e.response)
         })
+    },
+    computed: {
+      filteredlist(){
+        // filer() returns an array, filter((what) => { return the thing that includes the search keyword })
+        return this.postslist.filter((post) => {
+          return post.title.includes(this.searchkeyword);
+        });
+      }
+
     }
   }
 </script>

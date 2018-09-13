@@ -1,18 +1,12 @@
 <template>
 
   <div id="app">
-    <div id="scroll-animate-main">
-      <div class="wrapper-parallax">
         <hea></hea>
-
         <div class="container">
           <router-view/>
         </div>
-
         <foo></foo>
       </div>
-    </div>
-  </div>
 </template>
 
 

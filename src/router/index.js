@@ -6,10 +6,6 @@ import ProductList from '@/components/ProductList'
 import UserAccount from '@/components/UserAccount'
 import ShoppingCart from '@/components/ShoppingCart'
 
-
-
-
-
 Vue.use(Router)
 
 export default new Router({
