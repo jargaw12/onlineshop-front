@@ -8,31 +8,31 @@
       <br><br>
 
       <div>
-        <table class="full">
+        <table class="full" v-if="products.length">
           <thead>
           <tr>
             <th></th>
             <th>Produkt</th>
             <th class="price">Cena</th>
-            <th class="quantity">Ilosc</th>
+            <th class="center">Ilosc</th>
             <th class="price">Razem</th>
             <th class="price"></th>
           </tr>
           </thead>
 
-          <tbody v-for="p in products">
-          <tr>
+          <tbody>
+          <tr v-for="p in products">
             <td><img :src="p.image" class="product-image"/></td>
             <td class="pName">{{p.name}}</td>
             <td class="price">{{p.price | priceFormat}} zł</td>
            <td>
-             <div class="qty-minus" v-on:click="minusQty(buy_data)">-</div>
+             <div class="qty-minus" v-on:click="minusQty(p)">-</div>
              <div class="qty">{{p.quantity}}</div>
-             <div class="qty-plus" v-on:click="plusQty(buy_data)">+</div>
+             <div class="qty-plus" v-on:click="plusQty(p)">+</div>
            </td>
             <td class="price">{{computeSubTotal(p) | priceFormat}} zł</td>
             <td class="price">
-              <div class="clear" @:click="removeProduct"><i class="material-icons">clear</i></div>
+              <div class="clear" @click="removeProduct(p.id)" ><i class="material-icons">clear</i></div>
             </td>
           </tr>
           </tbody>
@@ -42,15 +42,21 @@
             <th>Totals</th>
             <td></td>
             <td></td>
-            <td class="quantity">{{totalQuantity}}</td>
+            <td class="center">
+             <div class="qty-minus total white-text">-</div>
+             <div class="qty">{{totalQuantity}}</div>
+             <div class="qty-plus total white-text">+</div>
+              </td>
             <td class="price">{{totalSumm | priceFormat}} zł</td>
             <td></td>
           </tr>
           </tfoot>
 
         </table>
+        <h5 class="center" v-else>Brak produktów w koszyku</h5>
 
-        <table class="mobile">
+
+        <table class="mobile" v-if="products.length">
           <tbody v-for="p in products">
           <tr>
             <td><img :src="p.image" class="product-image"/></td>
@@ -58,15 +64,15 @@
             <span>
               <div class="pName">{{p.name}}</div>
               <div class="quantity">
-                <div class="qty-minus" v-on:click="minusQty(buy_data)">-</div>
+                <div class="qty-minus" v-on:click="minusQty(p)">-</div>
              <div class="qty">{{p.quantity}}</div>
-             <div class="qty-plus" v-on:click="plusQty(buy_data)">+</div>
+             <div class="qty-plus" v-on:click="plusQty(p)">+</div>
           </div>
               <div>{{computeSubTotal(p) | priceFormat}} zł</div>
               </span>
             </td>
-            <td class="price">
-              <a @click="totalQuantity"><i class="material-icons white teal-text">clear</i></a>
+            <td class="price" @click="totalQuantity">
+              <a @click="totalQuantity"><i class="material-icons white teal-text" @click="totalQuantity">clear</i></a>
             </td>
           </tr>
           </tbody>
@@ -101,30 +107,33 @@
     },
     methods:{
       computeSubTotal: function(item) {
-        return(parseFloat(item.price.replace(",",".")) * parseFloat(item.quantity.replace(",","."))).toFixed(2).replace(".",",");
+        return(parseFloat(item.price.replace(",",".")) * parseFloat(item.quantity)).toFixed(2).replace(".",",");
       },
-      totalSumm: function(){
-        var sum = 0;
-        this.products.forEach(function(buyitem){
-          sum += parseInt(computeSubTotal(buyitem));
-        });
-        return sum;
+      removeProduct: function (index) {
+        this.products.splice(index, 1)
       },
-      totalQuantity: function(){
-        var sum = 0;
-        this.products.forEach(function(buyitem){
-          sum += parseInt(buyitem.quantity);
-        });
-        return sum;
-      },
+      // totalSumm: function(){
+      //   var sum = 0;
+      //   this.products.forEach(function(buyitem){
+      //     sum += parseInt(computeSubTotal(buyitem));
+      //   });
+      //   return sum;
+      // },
+      // totalQuantity: function(){
+      //   var sum = 0;
+      //   this.products.forEach(function(buyitem){
+      //     sum += parseInt(buyitem.quantity);
+      //   });
+      //   return sum;
+      // },
       plusQty: function(buy_data){
-        buy_data.quantity += 1;
+        buy_data.quantity=parseInt(buy_data.quantity) + parseInt(1);
         // buy_data.total = buy_data.qty*buy_data.price;
       },
       minusQty: function(buy_data){
-        buy_data.qty -= 1;
-        if (buy_data.qty < 0){
-          buy_data.qty = 0;
+        buy_data.quantity = parseInt(buy_data.quantity) - parseInt(1);
+        if (buy_data.quantity < 0){
+          buy_data.quantity = 0;
         }
         // buy_data.total = buy_data.qty*buy_data.price;
       }
@@ -137,19 +146,19 @@
       }
     },
     computed: {
-      // totalQuantity: function(){
-      //   console.log(this.products);
-      //   return this.products.reduce(function(total, item){
-      //
-      //     return total + parseFloat(item.quantity);
-      //   },0);
-      // },
-      // totalSumm: function(){
-      //   return parseFloat(this.products.reduce(function(total, item){
-      //
-      //     return total + (parseFloat(item.quantity) * parseFloat(item.price));
-      //   },0)).toFixed(2).replace(".",",");
-      // },
+      totalQuantity: function(){
+        console.log(this.products);
+        return this.products.reduce(function(total, item){
+      
+          return total + parseFloat(item.quantity);
+        },0);
+      },
+      totalSumm: function(){
+        return parseFloat(this.products.reduce(function(total, item){
+      
+          return total + (parseFloat(item.quantity) * parseFloat(item.price));
+        },0)).toFixed(2).replace(".",",");
+      },
     },
     created() {
       console.log('create');
@@ -241,5 +250,9 @@
 
   .clear{
     cursor: pointer;
+  }
+
+  .total{
+    cursor:default;
   }
 </style>

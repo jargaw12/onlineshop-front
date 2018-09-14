@@ -21,7 +21,12 @@
 
 <script>
   export default {
-    name: "MyHeader"
+    name: "MyHeader",
+    data() {
+      return {
+        loggedIn:false,
+      }
+    }
   }
 </script>
 
