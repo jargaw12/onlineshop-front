@@ -6,9 +6,10 @@
         <h3 class="center grey-text darken-4">Twój koszyk</h3>
       </div>
       <br><br>
+      <h6 class="center" v-if="!products.length">Brak produktów w koszyku</h6>
 
       <div>
-        <table class="full" v-if="products.length">
+        <table class="full" v-if="($mq === 'laptop' || $mq === 'desktop') && products.length">
           <thead>
           <tr>
             <th></th>
@@ -32,7 +33,7 @@
            </td>
             <td class="price">{{computeSubTotal(p) | priceFormat}} zł</td>
             <td class="price">
-              <div class="clear" @click="removeProduct(p.id)" ><i class="material-icons">clear</i></div>
+              <div class="clear tooltipped" data-position="right" data-tooltip="Usuń z koszyka" @click="removeProduct(p.id)" ><i class="material-icons">clear</i></div>
             </td>
           </tr>
           </tbody>
@@ -53,22 +54,20 @@
           </tfoot>
 
         </table>
-        <h5 class="center" v-else>Brak produktów w koszyku</h5>
 
-
-        <table class="mobile" v-if="products.length">
+        <table class="mobile" v-if="($mq === 'tablet' || $mq === 'mobile') && products.length">
           <tbody v-for="p in products">
           <tr>
             <td><img :src="p.image" class="product-image"/></td>
             <td>
             <span>
               <div class="pName">{{p.name}}</div>
-              <div class="quantity">
-                <div class="qty-minus" v-on:click="minusQty(p)">-</div>
-             <div class="qty">{{p.quantity}}</div>
-             <div class="qty-plus" v-on:click="plusQty(p)">+</div>
-          </div>
-              <div>{{computeSubTotal(p) | priceFormat}} zł</div>
+              <div class="quantity">Ilość:
+                <span class="qty-minus" v-on:click="minusQty(p)">-</span>
+                <span class="qty">{{p.quantity}}</span>
+                <span class="qty-plus" v-on:click="plusQty(p)">+</span>
+             </div>
+              <div>Cena: {{computeSubTotal(p) | priceFormat}} zł</div>
               </span>
             </td>
             <td class="price" @click="totalQuantity">
@@ -112,30 +111,14 @@
       removeProduct: function (index) {
         this.products.splice(index, 1)
       },
-      // totalSumm: function(){
-      //   var sum = 0;
-      //   this.products.forEach(function(buyitem){
-      //     sum += parseInt(computeSubTotal(buyitem));
-      //   });
-      //   return sum;
-      // },
-      // totalQuantity: function(){
-      //   var sum = 0;
-      //   this.products.forEach(function(buyitem){
-      //     sum += parseInt(buyitem.quantity);
-      //   });
-      //   return sum;
-      // },
       plusQty: function(buy_data){
         buy_data.quantity=parseInt(buy_data.quantity) + parseInt(1);
-        // buy_data.total = buy_data.qty*buy_data.price;
       },
       minusQty: function(buy_data){
         buy_data.quantity = parseInt(buy_data.quantity) - parseInt(1);
-        if (buy_data.quantity < 0){
-          buy_data.quantity = 0;
+        if (buy_data.quantity < 1){
+          buy_data.quantity = 1;
         }
-        // buy_data.total = buy_data.qty*buy_data.price;
       }
     },
     filters: {
@@ -164,13 +147,13 @@
       console.log('create');
       const api = axios.create({
         crossDomain : true,
-        baseURL: 'https://7f887a6b-a5cb-47cd-b34f-bf2f30ef8b46.mock.pstmn.io',
+        baseURL: 'http://localhost:8080',
       headers: {'x-api-key': '57c13c85d2f0409ca423e2f9772d8503',
         'Cache-Control': 'no-cache',
         'Postman-Token': 'f12715bc-c2b9-4a76-9aae-b19d0f281bb0'}});
 
       api
-        .get('/productsInCart')
+        .get('/shoppingcart')
   .then(response => {
     this.products = response.data;
     console.log('products');
