@@ -130,7 +130,7 @@
           'Cache-Control': 'no-cache',
           'Postman-Token': 'f12715bc-c2b9-4a76-9aae-b19d0f281bb0'}});
 
-      api.get('/productsInCart')
+      api.get('/order')
         .then(response => {
           this.productPosition = response.data;
           console.log('productPosition');
@@ -141,7 +141,7 @@
           this.errors.push(e.response)
         })
 
-      api.get('/order')
+      axios.get('http://localhost:8080/order//$route.params.id')
         .then(response => {
           this.order = response.data;
           console.log('order');

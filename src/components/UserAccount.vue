@@ -25,7 +25,7 @@
         </thead>
         <tbody v-for="o in orders">
         <tr>
-          <td><a @click="setOrder" href="/order">{{o.orderID}}</a></td>
+          <td><router-link :to="{path: '/order/'+o.orderID }">{{o.orderID}}</router-link></td>
           <td>{{o.orderDate}}</td>
           <td>{{o.deliveryDate}}</td>
           <td>{{o.deliveryForm}}</td>
@@ -49,14 +49,14 @@
     data() {
       return {
         total: 0,
-        orderid:0,
+        url:1111111,
         orders: [],
         errors: []
       }
     },
     methods:{
       setorder: function(item) {
-        this.orderid=item.orderID;
+        this.url="/order/"+item.orderID;
       }
       },
     created() {
