@@ -70,7 +70,15 @@
     created() {
       console.log('create');
 
-      axios.get(`http://localhost:8080/productlist`)
+      const api = axios.create({
+        crossDomain : true,
+        baseURL: `https://7f887a6b-a5cb-47cd-b34f-bf2f30ef8b46.mock.pstmn.io`,
+        headers: {'x-api-key': '57c13c85d2f0409ca423e2f9772d8503',
+          'Cache-Control': 'no-cache',
+          'Postman-Token': 'f12715bc-c2b9-4a76-9aae-b19d0f281bb0'}});
+
+      api
+        .get(`/products`)
         .then(response => {
           this.products = response.data;
           console.log('products');
