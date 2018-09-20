@@ -1,9 +1,9 @@
 <template>
 
   <div id="app">
-        <hea></hea>
+        <hea :products="products"></hea>
         <div class="container">
-          <router-view/>
+          <router-view @add="add" @remove="remove"/>
         </div>
         <foo></foo>
       </div>
@@ -19,6 +19,19 @@
       components: {
         Foo,
         Hea,
+    },
+    data(){
+      return{
+        products:0
+      }
+    },
+    methods:{
+      add(n){
+        this.products=this.products+n;
+      },
+      remove(n){
+        this.products=this.products-n;
+      }
     }
   }
 

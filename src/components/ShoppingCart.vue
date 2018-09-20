@@ -27,13 +27,13 @@
             <td class="pName">{{p.product.name}}</td>
             <td class="price">{{p.product.price | priceFormat}} zł</td>
            <td>
-             <div class="qty-minus" v-on:click="minusQty(p)">-</div>
+             <div class="qty-minus" v-on:click="minusQty(p)+ productRemove(1)">-</div>
              <div class="qty">{{p.quantity}}</div>
-             <div class="qty-plus" v-on:click="plusQty(p)">+</div>
+             <div class="qty-plus" v-on:click="plusQty(p) + productAdd(1)">+</div>
            </td>
             <td class="price">{{computeSubTotal(p) | priceFormat}} zł</td>
             <td class="price">
-              <div class="clear tooltipped" data-position="right" data-tooltip="Usuń z koszyka" @click="removeProduct(p.id)" ><i class="material-icons">clear</i></div>
+              <div class="clear tooltipped" data-position="right" data-tooltip="Usuń z koszyka" @click="removeProduct(p.id) + productRemove(p.quantity)"><i class="material-icons">clear</i></div>
             </td>
           </tr>
           </tbody>
@@ -119,7 +119,13 @@
         if (buy_data.quantity < 1){
           buy_data.quantity = 1;
         }
-      }
+      },
+      productAdd (n) {
+        this.$emit('add', n)
+      },
+      productRemove (n) {
+        this.$emit('remove', n)
+      },
     },
     filters: {
       priceFormat: function (value) {

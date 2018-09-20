@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-image">
       <img :src="p_image">
-      <span class="card-title">{{p_name}}</span>
+      <span class="card-title"><a href="/detail">{{p_name}}</a></span>
       <a class="btn-floating halfway-fab buy grey" onclick="M.toast({html: 'Dodano produkt do koszyka'})">
         <i class="material-icons">add_shopping_cart</i>
       </a>

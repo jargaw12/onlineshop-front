@@ -42,6 +42,11 @@ export default new Router({
       path: '/order/:id',
       name: 'Order',
       component: Order
+    },
+    {
+      path: '/payment',
+      name: 'OrderAndPayment',
+      component: Order
     }
   ]
 })

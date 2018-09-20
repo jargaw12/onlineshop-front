@@ -3,6 +3,7 @@
   $(function(){
     M.AutoInit();
     $('.sidenav').sidenav();
+    $('.btn').sidenav();
     $('.collapsible').collapsible();
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
