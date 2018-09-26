@@ -3,7 +3,7 @@
     <div class="card-image">
       <img :src="p_image">
       <span class="card-title"><a href="/detail">{{p_name}}</a></span>
-      <a class="btn-floating halfway-fab buy grey" onclick="M.toast({html: 'Dodano produkt do koszyka'})">
+      <a class="btn-floating halfway-fab buy grey" @click="productAdd(1)" onclick="M.toast({html: 'Dodano produkt do koszyka'})">
         <i class="material-icons">add_shopping_cart</i>
       </a>
     </div>
@@ -20,7 +20,16 @@
 <script>
   export default {
     name: "ProductCard",
-    props: ['p_name', 'p_description', 'p_price', 'p_image']
+    props: ['p_name', 'p_description', 'p_price', 'p_image'],
+    methods:{
+      productAdd (n) {
+        console.log("asdasd")
+        this.$emit('add', n)
+      },
+      productRemove (n) {
+        this.$emit('remove', n)
+      },
+    }
   }
 </script>
 

@@ -137,15 +137,4 @@
     z-index: 2;
   }
 
-  .catHeading {
-    text-align: center;
-    font-weight: bolder;
-    font-size: 3em;
-  }
-
-  .catSub {
-    text-align: center;
-    font-weight: bolder;
-    font-size: 1.8em;
-  }
 </style>

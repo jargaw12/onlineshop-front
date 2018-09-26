@@ -1,38 +1,46 @@
 <template>
-  <div class="productList">
-
-    <div class="section">
-      <div class="row">
-        <div class="col s12 m6 l4" v-for="p in products">
-          <product-card :p_name="p.name" :p_description="p.description" :p_price="p.price" :p_image="p.image" @add="productAdd"></product-card>
+  <div>
+    <br>
+    <div class="uk-child-width-1-4@m" >
+      <div v-for="p in products">
+        <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top">
+            <img :src="p.image" alt="">
+          </div>
+          <div class="uk-card-body">
+            <h3 class="uk-card-title">{{p.name}}</h3>
+            <p>{{p.description}}</p>
+            <span><p class="price">{{p.price}} zł</p>
+              <a class="uk-icon-button uk-margin-small-right" ratio="1.2" uk-icon="plus"></a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
-
-    <section class="pages">
-      <div class="row">
-        <div>
-          <ul class="pagination">
-            <li class="disabled">
-              <a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            <li class="active"><a href="#!">1</a></li>
-            <li class="waves-effect"><a href="#!">2</a></li>
-            <li class="waves-effect"><a href="#!">3</a></li>
-            <li class="waves-effect"><a href="#!">4</a></li>
-            <li class="waves-effect"><a href="#!">5</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-          </ul>
-        </div>
-      </div>
-    </section>
+    <br>
+    <ul class="uk-pagination" uk-margin>
+      <li><a href="#"><span uk-pagination-previous></span></a></li>
+      <li><a href="#">1</a></li>
+      <li class="uk-disabled"><span>...</span></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">6</a></li>
+      <li class="uk-active"><span>7</span></li>
+      <li><a href="#">8</a></li>
+      <li><a href="#">9</a></li>
+      <li><a href="#">10</a></li>
+      <li class="uk-disabled"><span>...</span></li>
+      <li><a href="#">20</a></li>
+      <li><a href="#"><span uk-pagination-next></span></a></li>
+    </ul>
+    <br>
   </div>
 </template>
 
 <script>
-  import ProductCard from './ProductCard.vue'
-  import axios from 'axios';
+  import axios from 'axios'
   export default {
-    name: 'ProductList',
+    name: 'ProductList2',
     data() {
       return {
         filters:{
@@ -45,7 +53,7 @@
       }
     },
     components: {
-      ProductCard,
+
     },
     methods:{
       productAdd (n) {

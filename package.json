@@ -1,23 +1,33 @@
 {
   "name": "mailordercompany-front",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "jargaw12 <33065466+jargaw12@users.noreply.github.com>",
   "private": true,
   "scripts": {
+    "build": "node build/build.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "capacitor-init": "vue-cli-service capacitor-init",
+    "capacitor-copy": "vue-cli-service capacitor-copy",
+    "capacitor-open": "vue-cli-service capacitor-open",
+    "capacitor-update": "vue-cli-service capacitor-update"
   },
   "dependencies": {
+    "@capacitor/cli": "^1.0.0-alpha.38",
+    "@capacitor/core": "^1.0.0-alpha.38",
+    "@vuikit/icons": "^0.8.1",
+    "@vuikit/theme": "^0.8.1",
     "axios": "^0.18.0",
     "materialize-css": "^1.0.0-rc.2",
+    "register-service-worker": "^1.0.0",
     "responsive": "^2.0.0",
+    "uikit": "^3.0.0-rc.16",
     "vue": "^2.5.17",
     "vue-mq": "^0.2.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuikit": "^0.8.10"
   },
   "devDependencies": {
+    "@vue/cli-plugin-pwa": "^3.0.3",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -46,6 +56,7 @@
     "shelljs": "^0.7.6",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
+    "vue-cli-plugin-pwa": "^1.0.0-alpha.1",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
@@ -54,13 +65,15 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "description": "A Vue.js project",
+  "author": "jargaw12 <33065466+jargaw12@users.noreply.github.com>",
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
 }

@@ -1,21 +1,32 @@
 <template>
-  <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <ul class="left hide-on-med-and-down">
-        <li><a href="#">Kategorie</a></li>
-      </ul>
-      <a id="logo-container" href="/" class="brand-logo center">Logo</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/cart"><i class="material-icons left">shopping_cart</i>Koszyk<span class="badge">({{products}})</span></a></li>
-        <li><a href="#">Zaloguj/Zarejestruj</a></li>
-      </ul>
-      <!--   Navbar mobile version   -->
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">Zaloguj/Zarejestruj</a></li>
-        <li><a href="/cart"><i class="material-icons left">shopping_cart</i>Koszyk<span class="badge">({{products}})</span></a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+  <nav class="uk-navbar-container uk-margin uk-navbar-transparent" uk-navbar>
+    <!--<div class="uk-navbar-center">-->
+
+      <div class="uk-navbar-left"><div>
+        <ul class="uk-navbar-nav">
+          <li>
+            <a href="#">Kategorie</a>
+            <div class="uk-navbar-dropdown">
+              <ul class="uk-nav uk-navbar-dropdown-nav">
+                <li class="uk-active"><a href="#">Active</a></li>
+                <li><a href="#">Item</a></li>
+                <li><a href="#">Item</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div></div>
+    <div class="uk-navbar-center">
+      <a class="uk-navbar-item uk-logo" href="#">Logo</a>
     </div>
+      <div class="uk-navbar-right"><div>
+        <ul class="uk-navbar-nav">
+          <li><a href="#">Zaloguj</a></li>
+          <li><a href="/cart">Koszyk ({{products}})</a></li>
+        </ul>
+      </div></div>
+
+    <!--</div>-->
   </nav>
 </template>
 

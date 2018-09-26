@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import ProductDetail from '@/components/ProductDetail'
 import ProductList from '@/components/ProductList'
+import ProductList2 from '@/components/ProductList2'
 import UserAccount from '@/components/UserAccount'
 import ShoppingCart from '@/components/ShoppingCart'
 import Order from '@/components/Order'
@@ -19,7 +20,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/detail',
+      path: '/detail/:id',
       name: 'Product Detail',
       component: ProductDetail
     },
@@ -27,6 +28,11 @@ export default new Router({
       path: '/list',
       name: 'Product List',
       component: ProductList
+    },
+    {
+      path: '/list2',
+      name: 'Product List2',
+      component: ProductList2
     },
     {
       path: '/account',
