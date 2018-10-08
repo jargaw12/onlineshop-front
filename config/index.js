@@ -9,13 +9,13 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/cart',
+    assetsPublicPath: '/*',
     proxyTable: {
-      '/': {
-        target: 'http://localhost:8080',
-        ws: true,
-        changeOrigin: true
-      }
+      // '/': {
+      //   target: 'http://localhost:8080',
+      //   ws: true,
+      //   changeOrigin: true
+      // }
     },
 
     // Various Dev Server settings

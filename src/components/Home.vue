@@ -1,47 +1,6 @@
 <template>
   <div class="home">
 
-    <div id="catDiv">
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?laptops">
-        <div class="catTitle">Laptops</div>
-      </a>
-
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?tv">
-        <div class="catTitle">Televisions</div>
-      </a>
-
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?mercedes">
-        <div class="catTitle">Cars</div>
-      </a>
-
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?fashion">
-        <div class="catTitle">Fashion</div>
-      </a>
-
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?animal">
-        <div class="catTitle">Animals</div>
-      </a>
-
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?furniture">
-        <div class="catTitle">Furniture</div>
-      </a>
-
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?garden">
-        <div class="catTitle">Gardens</div>
-      </a>
-
-      <a class="cat catOverlay" href="#">
-        <img src="https://source.unsplash.com/500x500/?real-estate">
-        <div class="catTitle">Houses</div>
-      </a>
-    </div>
   </div>
 </template>
 

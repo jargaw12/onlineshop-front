@@ -3,48 +3,81 @@
     <div>
 
       <div>
-        <h3>Twój koszyk</h3>
+        <h3 class="uk-text-center">Twój koszyk</h3>
       </div>
       <br><br>
-      <h6 class="center" v-if="!productPosition.length">Brak produktów w koszyku</h6>
+      <h6 class="center" v-if="!this.productPosition.length">Brak produktów w koszyku</h6>
 
       <div>
 
-        <table class="uk-table uk-table-responsive uk-table-divider">
+        <table v-if="this.productPosition.length" class="uk-table uk-table-responsive uk-table-divider">
           <thead>
           <tr>
-            <th></th>
+            <!--<th></th>-->
             <th>Produkt</th>
-            <th>Cena</th>
-            <th>Ilosc</th>
-            <th>Razem</th>
-            <th></th>
+            <!--<th>Cena</th>-->
+            <!--<th class="uk-text-left">Ilosc</th>-->
+            <!--<th>Razem</th>-->
+            <th>
+              <div>
+                <div class="uk-grid-small uk-child-width-expand uk-grid" uk-grid="">
+                  <div class="uk-first-column">Cena</div>
+                  <div class="tm-quantity-column">Ilość</div>
+                  <div>Razem</div>
+                  <div class="uk-width-auto">
+                    <div style="width: 20px;"></div>
+                  </div>
+                </div>
+              </div></th>
           </tr>
           </thead>
           <tbody>
-          <tr v-for="p in productPosition">
-            <td><img  :src="p.product.image" class="product-image"/></td>
-            <td>{{p.product.name}}</td>
-            <td>{{p.product.price | priceFormat}} zł</td>
-            <td>
-              <a class="qty-minus" uk-icon="minus" v-on:click="minusQty(p)" ratio="0.5"></a>
-              <div class="qty">{{p.quantity}}</div>
-              <a class="qty-plus" uk-icon="plus" v-on:click="plusQty(p)" ratio="0.5"></a>
+          <tr v-for="(item, index) in productPosition">
+            <td  class="uk-text-middle">
+              <div></div><img  :src="item.product.image" class="product-image"/> <span>{{item.product.name}}</span></td>
+            <!--<td class="uk-text-middle">{{item.product.name}}</td>-->
+            <td class="uk-text-middle">
+              <div class="">
+                <div class="uk-grid-small uk-child-width-1-1 uk-child-width-expand@s uk-text-center uk-grid" uk-grid="">
+                  <div class="uk-visible@m">
+                    <div>{{item.product.price | priceFormat}} zł</div>
+                  </div>
+                  <div>
+                    <a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>
+                    <div class="qty">{{item.quantity}}</div>
+                    <a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>
+                  </div>
+                  <div>
+                    <div>{{computeSubTotal(item) | priceFormat}} zł</div>
+                  </div>
+                  <div><a uk-icon="close" @click="productRemove(item, index)"></a></div>
+                </div>
+              </div>
             </td>
-            <td>{{computeSubTotal(p) | priceFormat}} zł</td>
-            <td>
-              <a uk-icon="close" @click="removeProduct(p.id) + productRemove(p.quantity)"></a>
-            </td>
+            <!--<td class="uk-text-middle">{{item.product.price | priceFormat}} zł</td>-->
+            <!--<td class="uk-text-middle">-->
+              <!--<a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>-->
+              <!--<div class="qty">{{item.quantity}}</div>-->
+              <!--<a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>-->
+            <!--</td>-->
+            <!--<td class="uk-text-middle">{{computeSubTotal(item) | priceFormat}} zł</td>-->
+            <!--<td class="uk-text-middle">-->
+              <!--<a uk-icon="close" @click="productRemove(item, index)"></a>-->
+            <!--</td>-->
           </tr>
           </tbody>
           <tfoot>
           <tr>
-            <th>Podsumowanie</th>
-            <td></td>
-            <td></td>
-            <td>{{totalQuantity}}</td>
-            <td>{{totalSumm | priceFormat}} zł</td>
-            <td></td>
+            <th class="uk-text-middle">
+              Podsumowanie
+              <span class="uk-hidden@m uk-align-right">{{totalSumm | priceFormat}}</span>
+            </th>
+
+            <td class="uk-align-right uk-text-middle">
+              <div>
+                {{totalSumm | priceFormat}} zł
+              </div>
+            </td>
           </tr>
           </tfoot>
         </table>
@@ -52,7 +85,7 @@
       </div>
       <br><br>
       <div class="uk-child-width-expand@s uk-text-center" uk-grid>
-      <button  class="uk-button uk-button-secondary uk-width-1-2">Płatność <span class="uk-margin-small-right" uk-icon="chevron-right"></span></button>
+      <button  class="uk-button uk-button-secondary uk-width-1-2 uk-align-center">Płatność <span class="uk-margin-small-right" uk-icon="chevron-right"></span></button>
       </div>
       <!--<div class="center">-->
         <!--<a class="waves-effect btn-large grey white-text"><i class="material-icons right">navigate_next</i>Przejdź do platnosci</a>-->
@@ -78,71 +111,72 @@
       computeSubTotal: function(item) {
         return(parseFloat(item.product.price.toString().replace(",",".")) * parseFloat(item.quantity)).toFixed(2).replace(".",",");
       },
-      removeProduct: function (index) {
-        // this.productPosition.splice(index, 1)
-      },
-      productRemove (n) {
-        this.$emit('remove', n)
+      productRemove (p, productId) {
         const api = axios.create({
           baseURL: 'http://localhost:8080',
+          headers:{
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          }
         });
-
-        api.delete('/shoppingcart',buy_data)
+        api.delete('/shoppingcart/'+ p.product.id)
           .then(response => {
-            this.productPosition.splice(index, 1);
-            console.log('products: ' + products );
-            console.log('response: ' + response.data );
+            this.$emit('remove', p.quantity);
+            this.productPosition.splice(productId, p.quantity);
+            console.log("Usunieto produkt nr: " + p.product.id)
           })
           .catch(e => {
-            console.log('error');
+            console.log('Nie można usunąć produktu z listy');
             console.log("Error: " + e);
             console.log("Error: " + e.response);
             this.errors.push(e.response)
           })
       },
-      plusQty: function(buy_data){
-        buy_data.quantity=parseInt(buy_data.quantity) + parseInt(1);
-        this.$emit('add', 1);
+      plusQty: function(buy_data,productId){
 
         const api = axios.create({
           baseURL: 'http://localhost:8080',
           headers:{
             'Access-Control-Allow-Origin': 'http://localhost:8080',
-      }
-         });
-
-        api.delete('/shoppingcart/1')
+          }
+        });
+        api.patch('/shoppingcart/'+ buy_data.product.id, 1)
           .then(response => {
-            this.products = response.data;
-            console.log('products: ' + products );
-            console.log('response: ' + response.data );
+            buy_data.quantity=parseInt(buy_data.quantity) + parseInt(1);
+            this.$emit('add', 1);
+            console.log("Zwiększono produkt nr: " +  buy_data.id)
           })
           .catch(e => {
-            console.log('error');
+            console.log('Nie można powiększyć produktu');
             console.log("Error: " + e);
             console.log("Error: " + e.response);
             this.errors.push(e.response)
           })
+
       },
-      minusQty: function(buy_data){
+      minusQty: function(buy_data,productId){
         buy_data.quantity = parseInt(buy_data.quantity) - parseInt(1);
         this.$emit('remove', 1)
         if (buy_data.quantity < 1){
           buy_data.quantity = 1;
         }
         else {
-          // axios.post('http//:localhost:8080/increment',buy_data)
-          //   .then(response => {
-          //     this.products = response.data;
-          //     console.log('products: ' + products );
-          //     console.log('response: ' + response.data );
-          //   })
-          //   .catch(e => {
-          //     console.log('error');
-          //     console.log("Error: " + e);
-          //     console.log("Error: " + e.response);
-          //     this.errors.push(e.response)
-          //   })
+          const api = axios.create({
+            baseURL: 'http://localhost:8080',
+            headers:{
+              'Access-Control-Allow-Origin': 'http://localhost:8080',
+            }
+          });
+          api.patch('/shoppingcart/'+ buy_data.product.id, -1)
+            .then(response => {
+              this.$emit('remove', 1);
+              console.log("Zmniejszono produkt nr: " + buy_data.product.id)
+            })
+            .catch(e => {
+              console.log('Nie można zmniejszyc produktu');
+              console.log("Error: " + e);
+              console.log("Error: " + e.response);
+              this.errors.push(e.response)
+            })
         }
       },
     },
@@ -169,19 +203,18 @@
       },
     },
     created() {
-      console.log('create');
       const api = axios.create({
-        crossDomain : true,
-        baseURL: 'https://7f887a6b-a5cb-47cd-b34f-bf2f30ef8b46.mock.pstmn.io',
-        headers: {'x-api-key': '57c13c85d2f0409ca423e2f9772d8503',
-          'Cache-Control': 'no-cache',
-          'Postman-Token': 'f12715bc-c2b9-4a76-9aae-b19d0f281bb0'}});
+        baseURL: 'http://localhost:8080',
+        headers:{
+          'Access-Control-Allow-Origin': 'http://localhost:8080',
+        }
+      });
 
       api
-        .get('/productsInCart')
+        .get('/shoppingcart')
   .then(response => {
     this.productPosition = response.data;
-    console.log('productPosition');
+    console.log("Dodano liste produktów o długości: " + this.productPosition.length)
   })
     .catch(e => {
       console.log('error');

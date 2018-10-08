@@ -7,6 +7,8 @@ import ProductList2 from '@/components/ProductList2'
 import UserAccount from '@/components/UserAccount'
 import ShoppingCart from '@/components/ShoppingCart'
 import Order from '@/components/Order'
+import Login from '@/components/Login'
+import Registration from '@/components/Registration'
 
 
 Vue.use(Router)
@@ -53,6 +55,16 @@ export default new Router({
       path: '/payment',
       name: 'OrderAndPayment',
       component: Order
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/registration',
+      name: 'Registration',
+      component: Registration
     }
   ]
 })

@@ -36,7 +36,6 @@
       }
     },
     created() {
-      console.log('create');
       const api = axios.create({
         baseURL: 'http://localhost:8080',
       });
@@ -44,7 +43,7 @@
       api.get('/shoppingcart/totalquantity')
         .then(response => {
           this.products = response.data;
-
+          console.log('Pobrano ilośc produktów w koszyku: ' + this.products);
         })
         .catch(e => {
           console.log("Error: " + e);
