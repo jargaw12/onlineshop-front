@@ -5,11 +5,11 @@
       <div v-for="p in products">
         <div class="uk-card uk-card-default">
           <div class="uk-card-media-top">
-            <img :src="p.image" alt="">
+            <router-link :to="{path: '/product/'+p.id }"><img :src="p.image" alt=""></router-link>
           </div>
           <div class="uk-card-body">
             <div>
-              <h4 class="uk-text-truncate">{{p.name}}</h4>
+              <h4 class="uk-text-truncate"><router-link :to="{path: '/product/'+p.id }">{{p.name}}</router-link></h4>
             </div>
             <div>
               <p class=" uk-text-truncate">{{p.description}}</p>
@@ -128,7 +128,7 @@
             console.log("Error: " + e);
             this.errors.push(e.response)
           });
-      }
+      },
     },
     computed: {
       filteredlist(){

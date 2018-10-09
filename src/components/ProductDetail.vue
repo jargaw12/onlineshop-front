@@ -5,7 +5,7 @@
       <div>
       <div class="uk-position-relative" uk-slideshow="animation: fade">
         <ul class="uk-slideshow-items">
-          <li><img :src=images[0].image alt="" uk-cover></li>
+          <li><img :src=this.product.image alt="" uk-cover></li>
           <li><img :src=images[1].image alt="" uk-cover></li>
           <li><img :src=images[2].image alt="" uk-cover></li>
         </ul>
@@ -36,7 +36,7 @@
           <article class="uk-article">
             <div class="uk-article-body">
               <h2>Touch Bar</h2>
-              <p>Vivamus ornare tortor elit, sed rutrum felis iaculis in. Nunc ut molestie neque. Aenean vitae elementum arcu, at rutrum ligula. Pellentesque fringilla dictum viverra. Vestibulum eu ipsum nec risus pharetra iaculis. Donec quis nulla orci. Suspendisse eget dictum augue, et lobortis justo. Suspendisse velit dui, sollicitudin quis velit nec, tincidunt consequat arcu.</p>
+              <p>{{product.description}}</p>
               <h2>Retina Display</h2>
               <p>Pellentesque dictum imperdiet rutrum. Vestibulum egestas quam eget maximus rutrum. Etiam blandit a dolor laoreet vulputate. Nulla ullamcorper ipsum et libero finibus, vitae vestibulum odio feugiat.</p>
               <figure class="uk-text-center"><img src="https://chekromul.github.io/uikit-ecommerce-template/images/articles/macbook-promo-4.jpg" alt="MacBook Pro"></figure>
@@ -108,10 +108,12 @@
 </template>
 
 <script>
-    export default {
+  import axios from 'axios';
+  export default {
         name: "ProductDetail",
       data () {
         return {
+          product:null,
           images:[{image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg"},
             {image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-add-1-large.jpg"},
             {image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-add-2-large.jpg"}],
@@ -137,7 +139,21 @@
         }
       },
       created(){
-        this.activeImage=this.images[0].image;
+        const api = axios.create({
+          baseURL: 'http://localhost:8080',
+          headers:{
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          }
+        });
+        api.get('/product/'+this.$route.params.id)
+          .then(response => {
+            this.product = response.data;
+            console.log('product');
+          })
+          .catch(e => {
+            console.log('error');
+            console.log("Error: " + e);
+          })
       },
       mounted(){
         this.init()

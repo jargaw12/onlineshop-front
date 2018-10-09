@@ -75,7 +75,7 @@
             <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: user"></span>
             <span class="uk-visible@m">Zaloguj</span></a></li>
           <li><a href="/cart">
-            <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: cart"><span class="uk-badge">{{products}}</span></span>
+            <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: cart">{{products}}</span>
             <span class="uk-visible@m">Koszyk ({{products}})</span>
           </a>
           </li>
