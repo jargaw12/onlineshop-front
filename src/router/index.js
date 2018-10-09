@@ -27,11 +27,6 @@ export default new Router({
       component: ProductDetail
     },
     {
-      path: '/list',
-      name: 'Product List',
-      component: ProductList
-    },
-    {
       path: '/list2',
       name: 'Product List2',
       component: ProductList2
@@ -60,11 +55,6 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/registration',
-      name: 'Registration',
-      component: Registration
     }
   ]
 })
