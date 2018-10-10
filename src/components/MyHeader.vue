@@ -75,8 +75,8 @@
             <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: user"></span>
             <span class="uk-visible@m">Zaloguj</span></a></li>
           <li><a href="/cart">
-            <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: cart">{{products}}</span>
-            <span class="uk-visible@m">Koszyk ({{products}})</span>
+            <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: cart">{{count}}</span>
+            <span class="uk-visible@m">Koszyk<sup> ({{count}})</sup></span>
           </a>
           </li>
         </ul>
@@ -106,13 +106,32 @@
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
     name: "MyHeader",
-    props:['products'],
     data() {
       return {
         loggedIn:false,
       }
+    },
+    computed: {
+      count() {
+        return store.state.count
+      }
+    },
+    created() {
+      const api = axios.create({
+        baseURL: 'http://localhost:8080',
+      });
+
+      api.get('/shoppingcart/totalquantity')
+        .then(response => {
+          this.products = response.data;
+          console.log('Pobrano ilośc produktów w koszyku: ' + this.products);
+        })
+        .catch(e => {
+          console.log("Error: " + e);
+        })
     }
   }
 </script>

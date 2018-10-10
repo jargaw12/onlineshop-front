@@ -2,7 +2,7 @@
 
   <div id="app">
         <div class="uk-container">
-          <hea :products="products"></hea>
+          <hea></hea>
 
           <router-view @add="add" @remove="remove"/>
         </div>
@@ -12,7 +12,6 @@
 
 
 <script>
-  import axios from 'axios';
   import Foo from './components/MyFooter.vue'
   import Hea from './components/MyHeader.vue'
 
@@ -24,31 +23,8 @@
     },
     data() {
       return {
-        products: 0
       }
     },
-    methods: {
-      add(n) {
-        this.products = this.products + n;
-      },
-      remove(n) {
-        this.products = this.products - n;
-      }
-    },
-    created() {
-      const api = axios.create({
-        baseURL: 'http://localhost:8080',
-      });
-
-      api.get('/shoppingcart/totalquantity')
-        .then(response => {
-          this.products = response.data;
-          console.log('Pobrano ilośc produktów w koszyku: ' + this.products);
-        })
-        .catch(e => {
-          console.log("Error: " + e);
-        })
-    }
   }
 </script>
 

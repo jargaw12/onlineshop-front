@@ -11,24 +11,49 @@
         </ul>
         <ul class="uk-switcher switcher-container uk-margin">
           <li><div>
-            <form>
-              <div class="uk-margin">
-                <div class="uk-inline uk-width-2-3">
-                  <span class="uk-form-icon" uk-icon="icon: user"></span>
-                  <input class="uk-input" type="text" placeholder="Login lub e-mail">
-                </div>
-              </div>
-
-              <div class="uk-margin">
-                <div class="uk-inline uk-width-2-3">
-                  <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                  <input class="uk-input" type="password" placeholder="Hasło">
-                </div>
-              </div>
-              <div>
-                <label class="uk-align-left uk-width-2-3"><input class="uk-checkbox" type="checkbox"> Zapamiętaj mnie</label>
+            <form class="uk-form-stacked">
+              <div class="uk-grid-medium uk-child-width-2-3 uk-grid uk-grid-stack" uk-grid="">
+                <fieldset class="uk-fieldset uk-first-column">
+                  <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-1@s uk-grid" uk-grid="">
+                    <div class="uk-first-column"><label>
+                      <div class="uk-form-label">Login/e-mail</div>
+                      <div class="uk-inline uk-width-2-3">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input class="uk-input" type="text" placeholder="Login lub e-mail">
+                      </div>
+                    </label>
+                    </div>
+                    <div><label>
+                      <div class="uk-form-label">Hasło</div>
+                      <div class="uk-inline uk-width-2-3">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <input class="uk-input" type="password" placeholder="Hasło">
+                      </div>
+                    </label>
+                    </div>
+                  </div>
+                </fieldset>
               </div>
             </form>
+            <!--<form>-->
+              <!--<div class="uk-margin">-->
+                <!--<div class="uk-inline uk-width-2-3">-->
+                  <!--<span class="uk-form-icon" uk-icon="icon: user"></span>-->
+                  <!--<input class="uk-input" type="text" placeholder="Login lub e-mail">-->
+                <!--</div>-->
+              <!--</div>-->
+
+              <!--<div class="uk-margin">-->
+                <!--<div class="uk-inline uk-width-2-3">-->
+                  <!--<span class="uk-form-icon" uk-icon="icon: lock"></span>-->
+                  <!--<input class="uk-input" type="password" placeholder="Hasło">-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<label class="uk-align-left uk-width-2-3"><input class="uk-checkbox" type="checkbox"> Zapamiętaj mnie</label>-->
+              <!--</div>-->
+            <!--</form>-->
+            <br><br>
             <div class="mybtn">
               <button class="uk-button uk-button-secondary uk-width-2-3">Zaloguj</button>
             </div>
@@ -65,6 +90,7 @@
                 </div>
               </div>
             </form>
+            <br><br>
             <div class="mybtn">
               <button class="uk-button uk-button-secondary uk-width-2-3">Zarejestruj</button>
             </div>
@@ -97,28 +123,28 @@
 </script>
 
 <style scoped>
-  .uk-card-body {
-    padding-left: 15%;
-    padding-right: 15%;
-  }
-  .uk-margin{
-    text-align: center;
-  }
-  /*.uk-margin .label{*/
-    /*text-align: left;*/
-    /*padding-left: 19%;*/
-    /*line-height: 0em ;*/
+  /*.uk-card-body {*/
+    /*padding-left: 15%;*/
+    /*padding-right: 15%;*/
   /*}*/
-  .uk-input{
-    width: 100%;
-  }
+  /*.uk-margin{*/
+    /*text-align: center;*/
+  /*}*/
+  /*!*.uk-margin .label{*!*/
+    /*!*text-align: left;*!*/
+    /*!*padding-left: 19%;*!*/
+    /*!*line-height: 0em ;*!*/
+  /*!*}*!*/
+  /*.uk-input{*/
+    /*width: 100%;*/
+  /*}*/
 
-  .mybtn{
-    text-align: center;
-  }
-  .c-right{
-    padding-right: 19%;
-    text-align: right;
-  }
+  /*.mybtn{*/
+    /*text-align: center;*/
+  /*}*/
+  /*.c-right{*/
+    /*padding-right: 19%;*/
+    /*text-align: right;*/
+  /*}*/
 
 </style>

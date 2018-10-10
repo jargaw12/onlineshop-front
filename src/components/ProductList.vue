@@ -1,38 +1,89 @@
 <template>
-  <div class="productList">
-
-    <div class="section">
-      <div class="row">
-        <div class="col s12 m6 l4" v-for="p in products">
-          <product-card :p_name="p.name" :p_description="p.description" :p_price="p.price" :p_image="p.image" @add="productAdd"></product-card>
-        </div>
-      </div>
-    </div>
-
-    <section class="pages">
-      <div class="row">
-        <div>
-          <ul class="pagination">
-            <li class="disabled">
-              <a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            <li class="active"><a href="#!">1</a></li>
-            <li class="waves-effect"><a href="#!">2</a></li>
-            <li class="waves-effect"><a href="#!">3</a></li>
-            <li class="waves-effect"><a href="#!">4</a></li>
-            <li class="waves-effect"><a href="#!">5</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  <div>
+    <br>
+    <div class="uk-grid">
+      <div class="uk-width-1-4@m uk-box-shadow-small">
+        <section class="uk-card-small uk-card-body"><h4 class="uk-margin-small-bottom">Categories</h4>
+          <ul class="uk-nav uk-nav-default">
+            <li><a href="subcategory.html">Laptops</a></li>
+            <li><a href="subcategory.html">Tablets</a></li>
+            <li><a href="subcategory.html">Peripherals</a></li>
+            <li><a href="subcategory.html">Keyboards</a></li>
+            <li><a href="subcategory.html">Accessories</a></li>
           </ul>
+        </section>
+        <section class="uk-card-small uk-card-body">
+          <ul uk-accordion="multiple: true">
+            <li class="uk-open">
+              <a class="uk-accordion-title" href="#">Cena</a>
+              <div class="uk-accordion-content">
+                <form class="uk-form-stacked">
+                  <div class="uk-grid-medium uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                    <fieldset class="uk-fieldset uk-first-column">
+                      <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s uk-grid" uk-grid="">
+                        <div><label>
+                          <div class="uk-form-label">Cena od</div>
+                          <input class="uk-input" type="number" value="0" placeholder="Od"></label></div>
+                        <div class="uk-grid-margin uk-first-column"><label>
+                          <div class="uk-form-label">Cena do</div>
+                          <input class="uk-input" type="number" value="999999" placeholder="Do"></label></div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li>
+              <a class="uk-accordion-title" href="#">Marka</a>
+              <div class="uk-accordion-content">
+                <form class="uk-form-stacked">
+                  <div class="uk-grid-medium uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                    <fieldset class="uk-fieldset uk-first-column">
+                      <ul class="uk-list">
+                        <li>
+                          <label><input class="uk-checkbox" type="checkbox"> Lenovo</label>
+                        </li>
+                        <li>
+                          <label><input class="uk-checkbox" type="checkbox"> Dell</label>
+                        </li>
+                        <li>
+                          <label><input class="uk-checkbox" type="checkbox"> Asus</label>
+                        </li>
+                      </ul>
+                    </fieldset>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li>
+              <a class="uk-accordion-title" href="#">Kolor</a>
+              <div class="uk-accordion-content">
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat proident.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+      <div class="uk-width-expand@m">
+        <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-text-center" uk-grid>
+          <div v-for="p in products">
+            <product-card :p_id="p.id" :p_image="p.image" :p_description="p.description" :p_name="p.name" :p_price="p.price"></product-card>
+          </div>
         </div>
       </div>
-    </section>
+    </div >
+    <br>
+   <pagitation :number-of-pages="this.numberOfPages"></pagitation>
+    <br>
   </div>
 </template>
 
 <script>
-  import ProductCard from './ProductCard.vue'
-  import axios from 'axios';
+  import axios from 'axios'
+  import ProductCard from "./ProductCard";
+  import Pagitation from "./Pagitation";
   export default {
-    name: 'ProductList',
+    name: 'ProductList2',
     data() {
       return {
         filters:{
@@ -41,32 +92,32 @@
           filterBy: 'someCategory'
         },
         products: [],
-        errors: []
+        errors: [],
+        pagesize:3,
+        numberOfPages:0,
+        activePage:1
       }
     },
     components: {
-      ProductCard,
-    },
-    methods:{
-      productAdd (n) {
-        console.log("asdasd")
-        this.$emit('add', n)
-      },
+      Pagitation,
+      ProductCard
+
     },
     created() {
       console.log('create');
 
       const api = axios.create({
-        crossDomain : true,
-        baseURL: `https://7f887a6b-a5cb-47cd-b34f-bf2f30ef8b46.mock.pstmn.io`,
-        headers: {'x-api-key': '57c13c85d2f0409ca423e2f9772d8503',
-          'Cache-Control': 'no-cache',
-          'Postman-Token': 'f12715bc-c2b9-4a76-9aae-b19d0f281bb0'}});
+        baseURL: 'http://localhost:8080',
+        headers:{
+          'Access-Control-Allow-Origin': 'http://localhost:8080',
+        }
+      });
 
       api
-        .get(`/products`)
+        .get(`/productlist`+'/page?number='+1+'&size='+this.pagesize)
         .then(response => {
-          this.products = response.data;
+          this.products = response.data.content;
+          this.numberOfPages = response.data.totalPages;
           console.log('products');
         })
         .catch(e => {
@@ -75,11 +126,35 @@
           this.errors.push(e.response)
         })
     },
+    methods: {
+      changePage(page){
+        // $('.page').val().removeClass("active");
+        // $('.page').val(page).addClass("active");
+        const api = axios.create({
+          baseURL: 'http://localhost:8080',
+          headers:{
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+          }
+        });
+
+        api
+          .get(`/productlist`+'/page?number='+page+'&size='+this.pagesize)
+          .then(response => {
+            this.products = response.data.content;
+            console.log('products');
+          })
+          .catch(e => {
+            console.log('error');
+            console.log("Error: " + e);
+            this.errors.push(e.response)
+          });
+      },
+    },
     computed: {
       filteredlist(){
         // filer() returns an array, filter((what) => { return the thing that includes the search keyword })
         return this.postslist.filter((post) => {
-          return post.title.includes(this.searchkeyword);
+          return products.name.includes(this.searchkeyword);
         });
       }
 

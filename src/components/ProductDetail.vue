@@ -1,4 +1,4 @@
-<template xmlns:color="http://www.w3.org/1999/xhtml">
+<template>
   <div>
 
     <div class="uk-child-width-1-2 uk-text-center" uk-grid>
@@ -20,7 +20,27 @@
         </div>
       </div>
 
-      <div>2 kolumna</div>
+      <div>
+      <h5>{{product.name}}</h5>
+        <p>{{product.price}}</p>
+
+        <form class="uk-form-stacked">
+          <div class="uk-grid-medium uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+            <fieldset class="uk-fieldset uk-first-column">
+              <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s uk-grid" uk-grid="">
+                <div class="uk-first-column">
+                  <a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>
+                  <input class="uk-input" type="text" :value="item.quantity"></div>
+                <a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>
+              </div>
+            </fieldset>
+          </div>
+        </form>
+        <br><br>
+        <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+          <button  class="uk-button uk-button-secondary uk-width-1-2 uk-align-center">Płatność <span class="uk-margin-small-right" uk-icon="chevron-right"></span></button>
+        </div>
+      </div>
 
     </div>
 
@@ -163,5 +183,18 @@
 </script>
 
 <style scoped>
-
+  .qty-minus {
+    float: left;
+    line-height: 25px;
+  }
+  .qty {
+    float: left;
+    /*line-height: 100px;*/
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .qty-plus {
+    float: left;
+    line-height: 25px;
+  }
 </style>

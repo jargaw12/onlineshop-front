@@ -98,6 +98,7 @@
 
 <script>
   import axios from 'axios';
+  import { EventBus } from '../Event.js';
   export default {
     name: 'ShoppingCart',
     data() {
@@ -120,7 +121,8 @@
         });
         api.delete('/shoppingcart/'+ p.product.id)
           .then(response => {
-            this.$emit('remove', p.quantity);
+             // this.$bus.$emit('remove', p.quantity);
+            store.commit('minus', p.quantity);
             this.productPosition.splice(productId, p.quantity);
             console.log("Usunieto produkt nr: " + p.product.id)
           })
@@ -142,7 +144,8 @@
         api.patch('/shoppingcart/'+ buy_data.product.id, 1)
           .then(response => {
             buy_data.quantity=parseInt(buy_data.quantity) + parseInt(1);
-            this.$emit('add', 1);
+            // this.$bus.$emit('add', 1);
+            store.commit('plus', 1);
             console.log("Zwiększono produkt nr: " +  buy_data.id)
           })
           .catch(e => {
@@ -155,7 +158,8 @@
       },
       minusQty: function(buy_data,productId){
         buy_data.quantity = parseInt(buy_data.quantity) - parseInt(1);
-        this.$emit('remove', 1)
+        // this.$bus.$emit('remove', 1)
+        store.commit('minus', 1);
         if (buy_data.quantity < 1){
           buy_data.quantity = 1;
         }
@@ -168,7 +172,8 @@
           });
           api.patch('/shoppingcart/'+ buy_data.product.id, -1)
             .then(response => {
-              this.$emit('remove', 1);
+              //this.$bus.$emit('remove', 1);
+              store.commit('minus', 1);
               console.log("Zmniejszono produkt nr: " + buy_data.product.id)
             })
             .catch(e => {
@@ -227,14 +232,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .price{
-    text-align: right;
-    max-width: 10%;
-  }
-
-  .quantity{
-    text-align: right;
-  }
 
   .product-image{
     width: 100px;
@@ -256,11 +253,4 @@
     line-height: 25px;
   }
 
-  .clear{
-    cursor: pointer;
-  }
-
-  .total{
-    cursor:default;
-  }
 </style>

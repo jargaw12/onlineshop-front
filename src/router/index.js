@@ -3,13 +3,10 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import ProductDetail from '@/components/ProductDetail'
 import ProductList from '@/components/ProductList'
-import ProductList2 from '@/components/ProductList2'
 import UserAccount from '@/components/UserAccount'
 import ShoppingCart from '@/components/ShoppingCart'
 import Order from '@/components/Order'
 import Login from '@/components/Login'
-import Registration from '@/components/Registration'
-
 
 Vue.use(Router)
 
@@ -27,9 +24,9 @@ export default new Router({
       component: ProductDetail
     },
     {
-      path: '/list2',
-      name: 'Product List2',
-      component: ProductList2
+      path: '/list',
+      name: 'Product List',
+      component: ProductList
     },
     {
       path: '/account',
