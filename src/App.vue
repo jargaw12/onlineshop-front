@@ -1,10 +1,8 @@
 <template>
-
   <div id="app">
         <div class="uk-container">
           <hea></hea>
-
-          <router-view @add="add" @remove="remove"/>
+          <router-view/>
         </div>
         <!--<foo></foo>-->
       </div>
@@ -14,6 +12,7 @@
 <script>
   import Foo from './components/MyFooter.vue'
   import Hea from './components/MyHeader.vue'
+  import store from './store'
 
   export default {
     name: 'App',
@@ -21,6 +20,7 @@
       Foo,
       Hea,
     },
+    store,
     data() {
       return {
       }

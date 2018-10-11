@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import Vuex from 'vuex'
 import VueMq from 'vue-mq'
 import App from './App'
 import Foo from './components/MyFooter'
@@ -17,34 +18,7 @@ Object.defineProperties(Vue.prototype, {
   }
 });
 
-const store = new Vuex.Store({
-  state: {
-    count: 0
-  },
-  mutations: {
-    plus (state, n) {
-      state.count += n
-  },
-    minus (state, n) {
-      state.count-= n
-    }
-  }
-});
-
-Vue.use(Vuex);
 Vue.component('foo', Foo);
-
-/* eslint-disable no-new */
-// Vue.use(Vuikit)
-// Vue.use(VuikitIcons)
-Vue.use(VueMq, {
-  breakpoints: {
-    mobile: 450,
-    tablet: 993,
-    laptop: 1250,
-    desktop: Infinity,
-  }
-});
 
 new Vue({
   el: '#app',

@@ -21,21 +21,16 @@
       </div>
 
       <div>
-      <h5>{{product.name}}</h5>
-        <p>{{product.price}}</p>
+      <h4>{{this.product.name}}</h4>
+        <p>{{this.product.price}}</p>
 
-        <form class="uk-form-stacked">
-          <div class="uk-grid-medium uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-            <fieldset class="uk-fieldset uk-first-column">
-              <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s uk-grid" uk-grid="">
-                <div class="uk-first-column">
-                  <a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>
-                  <input class="uk-input" type="text" :value="item.quantity"></div>
-                <a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>
-              </div>
-            </fieldset>
+        <div>
+          <form>
+            <a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>
+            <div class="qty"><input class="uk-input" type="text" min="1" value="1"/></div>
+            <a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>
+          </form>
           </div>
-        </form>
         <br><br>
         <div class="uk-child-width-expand@s uk-text-center" uk-grid>
           <button  class="uk-button uk-button-secondary uk-width-1-2 uk-align-center">Płatność <span class="uk-margin-small-right" uk-icon="chevron-right"></span></button>
@@ -56,7 +51,7 @@
           <article class="uk-article">
             <div class="uk-article-body">
               <h2>Touch Bar</h2>
-              <p>{{product.description}}</p>
+              <p>{{this.product.description}}</p>
               <h2>Retina Display</h2>
               <p>Pellentesque dictum imperdiet rutrum. Vestibulum egestas quam eget maximus rutrum. Etiam blandit a dolor laoreet vulputate. Nulla ullamcorper ipsum et libero finibus, vitae vestibulum odio feugiat.</p>
               <figure class="uk-text-center"><img src="https://chekromul.github.io/uikit-ecommerce-template/images/articles/macbook-promo-4.jpg" alt="MacBook Pro"></figure>
@@ -130,7 +125,6 @@
 <script>
   import axios from 'axios';
   export default {
-        name: "ProductDetail",
       data () {
         return {
           product:null,
@@ -154,9 +148,6 @@
         productRemove (n) {
           this.$emit('remove', n)
         },
-        init(){
-          console.log(this.$refs.materialboxed);
-        }
       },
       created(){
         const api = axios.create({
@@ -175,9 +166,6 @@
             console.log("Error: " + e);
           })
       },
-      mounted(){
-        this.init()
-      }
     }
 
 </script>

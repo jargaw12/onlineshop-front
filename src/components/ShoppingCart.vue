@@ -98,7 +98,6 @@
 
 <script>
   import axios from 'axios';
-  import { EventBus } from '../Event.js';
   export default {
     name: 'ShoppingCart',
     data() {

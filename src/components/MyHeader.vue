@@ -116,7 +116,7 @@
     },
     computed: {
       count() {
-        return store.state.count
+        return this.$store.state.count
       }
     },
     created() {
