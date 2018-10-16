@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <h1>Home</h1>
+    <h3>Witaj + {{name}}</h3>
   </div>
 </template>
 
@@ -9,8 +10,12 @@
     name: 'Home',
     data () {
       return {
-        msg: 'Home'
+        msg: 'Home',
+        name:"",
       }
+    },
+    mounted(){
+        var isLoggedIn=false;
     }
   }
 </script>

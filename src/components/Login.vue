@@ -19,7 +19,7 @@
                       <div class="uk-form-label">Login/e-mail</div>
                       <div class="uk-inline uk-width-2-3">
                         <span class="uk-form-icon" uk-icon="icon: user"></span>
-                        <input class="uk-input" type="text" placeholder="Login lub e-mail">
+                        <input class="uk-input" type="text" placeholder="Login lub e-mail" v-model="username">
                       </div>
                     </label>
                     </div>
@@ -27,7 +27,7 @@
                       <div class="uk-form-label">Hasło</div>
                       <div class="uk-inline uk-width-2-3">
                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                        <input class="uk-input" type="password" placeholder="Hasło">
+                        <input class="uk-input" type="password" placeholder="Hasło" v-model="password">
                       </div>
                     </label>
                     </div>
@@ -55,7 +55,7 @@
             <!--</form>-->
             <br><br>
             <div class="mybtn">
-              <button class="uk-button uk-button-secondary uk-width-2-3">Zaloguj</button>
+              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="login">Zaloguj</button>
             </div>
             <a class=" uk-width-1-2 c-right">Zapomniałeś hasła?</a>
           </div></li>
@@ -92,7 +92,7 @@
             </form>
             <br><br>
             <div class="mybtn">
-              <button class="uk-button uk-button-secondary uk-width-2-3">Zarejestruj</button>
+              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="login">Zarejestruj</button>
             </div>
           </div></li>
         </ul>
@@ -104,73 +104,74 @@
 </template>
 
 <script>
-  const API_URL = 'http://localhost:8081/'
-  const LOGIN_URL = API_URL + 'sessions/create/'
-  const SIGNUP_URL = API_URL + 'users/'
+  import axios from 'axios';
     export default {
       name: "Login",
-      // User object will let us check authentication status
-      user: {
-        authenticated: false
-      },
-
-      // Send a request to the login URL and save the returned JWT
-      login(context, creds, redirect) {
-        context.$http.post(LOGIN_URL, creds, (data) => {
-          localStorage.setItem('id_token', data.id_token)
-          localStorage.setItem('access_token', data.access_token)
-
-          this.user.authenticated = true
-
-          // Redirect to a specified route
-          if(redirect) {
-            router.go(redirect)
-          }
-
-        }).error((err) => {
-          context.error = err
-        })
-      },
-
-      signup(context, creds, redirect) {
-        context.$http.post(SIGNUP_URL, creds, (data) => {
-          localStorage.setItem('id_token', data.id_token)
-          localStorage.setItem('access_token', data.access_token)
-
-          this.user.authenticated = true
-
-          if(redirect) {
-            router.go(redirect)
-          }
-
-        }).error((err) => {
-          context.error = err
-        })
-      },
-
-      // To log out, we just need to remove the token
-      logout() {
-        localStorage.removeItem('id_token')
-        localStorage.removeItem('access_token')
-        this.user.authenticated = false
-      },
-
-      checkAuth() {
-        var jwt = localStorage.getItem('id_token')
-        if(jwt) {
-          this.user.authenticated = true
-        }
-        else {
-          this.user.authenticated = false
-        }
-      },
-
-      // The object to be passed as a header for authenticated requests
-      getAuthHeader() {
+      data() {
         return {
-          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+          username: '',
+          password: '',
+        }
+      },
+      methods:{
+        login() {
+          const params = new URLSearchParams();
+          params.append('grant_type', 'password');
+          params.append('username', this.username);
+          params.append('password', this.password);
+          axios({
+            method:'post',
+            url:'http://localhost:8080/oauth/token',
+            auth:{username:'frontclient',password: 'frontpassword'},
+            headers:{"Content-Type": "application/x-www-form-urlencoded"},
+            data:params,
+          })
+            .then(function (response) {
+              document.cookie="acces_token=" + response.data.access_token + ";path=/";
+              this.$router.push({name: "Home"});
+            });
         }
       }
+
+      // signup(context, creds, redirect) {
+      //   context.$http.post(SIGNUP_URL, creds, (data) => {
+      //     localStorage.setItem('id_token', data.id_token)
+      //     localStorage.setItem('access_token', data.access_token)
+      //
+      //     this.user.authenticated = true
+      //
+      //     if(redirect) {
+      //       router.go(redirect)
+      //     }
+      //
+      //   }).error((err) => {
+      //     context.error = err
+      //   })
+      // },
+      //
+      // // To log out, we just need to remove the token
+      // logout() {
+      //   localStorage.removeItem('id_token')
+      //   localStorage.removeItem('access_token')
+      //   this.user.authenticated = false
+      // },
+      //
+      // checkAuth() {
+      //   var jwt = localStorage.getItem('id_token')
+      //   if(jwt) {
+      //     this.user.authenticated = true
+      //   }
+      //   else {
+      //     this.user.authenticated = false
+      //   }
+      // },
+      //
+      // // The object to be passed as a header for authenticated requests
+      // getAuthHeader() {
+      //   return {
+      //     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      //   }
+      // }
     }
 </script>
 
