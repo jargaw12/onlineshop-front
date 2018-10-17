@@ -5,8 +5,13 @@ import App from './App'
 import Foo from './components/MyFooter'
 import router from './router'
 import axios from 'axios'
+import Vuikit from 'vuikit'
+import VuikitIcons from '@vuikit/icons'
+import '@vuikit/theme'
 
 Vue.config.productionTip = false;
+Vue.use(Vuikit)
+Vue.use(VuikitIcons)
 
 const api2 = axios.create({
   baseURL: 'http://localhost:8080',

@@ -1,24 +1,19 @@
 <template>
   <div >
     <br>
-    <div class="uk-card uk-card-default">
-      <div class="uk-card-media-top">
-      </div>
-      <div class="uk-card-body">
-        <ul class="uk-child-width-expand" uk-tab uk-switcher="animation: uk-animation-fade" id="sw">
-          <li><a href="#">Zaloguj</a></li>
-          <li><a href="#">Zarejestruj</a></li>
-        </ul>
-        <ul class="uk-switcher switcher-container uk-margin">
-          <li><div>
+    <vk-card>
+      <div class="uk-margin-medium-top">
+        <vk-tabs align="justify">
+
+          <vk-tabs-item title="Zaloguj">
             <form class="uk-form-stacked">
-              <div class="uk-grid-medium uk-child-width-2-3 uk-grid uk-grid-stack" uk-grid="">
+              <!--<div class="uk-grid-medium uk-child-width-2-3 uk-grid uk-grid-stack" uk-grid="">-->
                 <fieldset class="uk-fieldset uk-first-column">
                   <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-1@s uk-grid" uk-grid="">
                     <div class="uk-first-column"><label>
                       <div class="uk-form-label">Login/e-mail</div>
                       <div class="uk-inline uk-width-2-3">
-                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <vk-icon class="uk-form-icon" icon="user"></vk-icon>
                         <input class="uk-input" type="text" placeholder="Login lub e-mail" v-model="username">
                       </div>
                     </label>
@@ -26,66 +21,48 @@
                     <div><label>
                       <div class="uk-form-label">Hasło</div>
                       <div class="uk-inline uk-width-2-3">
-                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
                         <input class="uk-input" type="password" placeholder="Hasło" v-model="password">
                       </div>
                     </label>
                     </div>
                   </div>
                 </fieldset>
-              </div>
+              <!--</div>-->
             </form>
-            <!--<form>-->
-              <!--<div class="uk-margin">-->
-                <!--<div class="uk-inline uk-width-2-3">-->
-                  <!--<span class="uk-form-icon" uk-icon="icon: user"></span>-->
-                  <!--<input class="uk-input" type="text" placeholder="Login lub e-mail">-->
-                <!--</div>-->
-              <!--</div>-->
-
-              <!--<div class="uk-margin">-->
-                <!--<div class="uk-inline uk-width-2-3">-->
-                  <!--<span class="uk-form-icon" uk-icon="icon: lock"></span>-->
-                  <!--<input class="uk-input" type="password" placeholder="Hasło">-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div>-->
-                <!--<label class="uk-align-left uk-width-2-3"><input class="uk-checkbox" type="checkbox"> Zapamiętaj mnie</label>-->
-              <!--</div>-->
-            <!--</form>-->
             <br><br>
             <div class="mybtn">
               <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="login">Zaloguj</button>
             </div>
             <a class=" uk-width-1-2 c-right">Zapomniałeś hasła?</a>
-          </div></li>
+          </vk-tabs-item>
 
-          <li><div>
+          <vk-tabs-item title="Zarejestruj">
             <form action="Home.vue">
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
-                  <span class="uk-form-icon" uk-icon="icon: user"></span>
+                  <vk-icon class="uk-form-icon" icon="user"></vk-icon>
                   <input class="uk-input" type="text" placeholder="Imię">
                 </div>
               </div>
 
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
-                  <span class="uk-form-icon" uk-icon="icon: users"></span>
+                  <vk-icon class="uk-form-icon" icon="users"></vk-icon>
                   <input class="uk-input" type="text" placeholder="Nazwisko">
                 </div>
               </div>
 
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
-                  <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                  <vk-icon class="uk-form-icon" icon="mail"></vk-icon>
                   <input class="uk-input" type="text" placeholder="E-mail">
                 </div>
               </div>
 
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
-                  <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                  <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
                   <input class="uk-input" type="password" placeholder="Hasło">
                 </div>
               </div>
@@ -94,19 +71,20 @@
             <div class="mybtn">
               <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="signup">Zarejestruj</button>
             </div>
-          </div></li>
-        </ul>
+          </vk-tabs-item>
+        </vk-tabs>
       </div>
-    </div>
-    <br>
+    </vk-card>
 
   </div>
 </template>
 
 <script>
   import axios from 'axios';
+  import VkIcon from "vuikit/src/library/icon/components/icon";
     export default {
       name: "Login",
+      components: {VkIcon},
       data() {
         return {
           username: '',
