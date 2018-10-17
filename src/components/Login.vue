@@ -61,7 +61,7 @@
           </div></li>
 
           <li><div>
-            <form>
+            <form action="Home.vue">
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
                   <span class="uk-form-icon" uk-icon="icon: user"></span>
@@ -92,7 +92,7 @@
             </form>
             <br><br>
             <div class="mybtn">
-              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="login">Zarejestruj</button>
+              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="signup">Zarejestruj</button>
             </div>
           </div></li>
         </ul>
@@ -130,7 +130,23 @@
               document.cookie="acces_token=" + response.data.access_token + ";path=/";
               this.$router.push({name: "Home"});
             });
-        }
+        },
+        signup(){
+          const api = axios.create({
+            baseURL: 'http://localhost:8080',
+            headers:{
+              'Access-Control-Allow-Origin': 'http://localhost:8080',
+            },
+          });
+            api.post('signup',{
+              username: 'user2',
+              password: 'password2'
+            })
+              .then(console.log('rejestracja'))
+              .catch(e => {
+                console.log('error rejestracja');
+              })
+          }
       }
 
       // signup(context, creds, redirect) {
