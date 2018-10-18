@@ -1,21 +1,37 @@
 <template>
 
-  <div class="uk-card uk-card-default">
-    <div class="uk-card-media-top">
+  <!--<div class="uk-card uk-card-default">-->
+    <!--<div class="uk-card-media-top">-->
+      <!--<router-link :to="{path: '/product/'+p_id }"><img :src="p_image" alt=""></router-link>-->
+    <!--</div>-->
+    <!--<div class="uk-card-body">-->
+      <!--<div>-->
+        <!--<h4 class="uk-text-truncate"><router-link :to="{path: '/product/'+p_id }">{{p_name}}</router-link></h4>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--<p class=" uk-text-truncate">{{p_description}}</p>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--{{p_price}} zł-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <vk-card type="blank">
+    <div slot="media-top">
       <router-link :to="{path: '/product/'+p_id }"><img :src="p_image" alt=""></router-link>
     </div>
-    <div class="uk-card-body">
-      <div>
-        <h4 class="uk-text-truncate"><router-link :to="{path: '/product/'+p_id }">{{p_name}}</router-link></h4>
-      </div>
-      <div>
-        <p class=" uk-text-truncate">{{p_description}}</p>
-      </div>
-      <div>
-        {{p_price}} zł
-      </div>
+    <div>
+      <vk-card-title class="uk-text-truncate uk-link-reset"><router-link :to="{path: '/product/'+p_id }">{{p_name}}</router-link></vk-card-title>
+      <p class=" uk-text-truncate">{{p_description}}</p>
     </div>
-  </div>
+        {{p_price}} zł
+    <div ><vk-icon-button  href="#" icon="cart"></vk-icon-button></div>
+
+    <!--<span><vk-icon-button href="#" icon="cart"></vk-icon-button>-->
+      <!--{{p_price}} zł-->
+    <!--</span>-->
+  </vk-card>
 
 </template>
 

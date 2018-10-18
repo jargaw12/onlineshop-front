@@ -10,77 +10,28 @@
 
       <div>
 
-        <table v-if="this.productPosition.length" class="uk-table uk-table-responsive uk-table-divider">
-          <thead>
-          <tr>
-            <!--<th></th>-->
-            <th>Produkt</th>
-            <!--<th>Cena</th>-->
-            <!--<th class="uk-text-left">Ilosc</th>-->
-            <!--<th>Razem</th>-->
-            <th>
-              <div>
-                <div class="uk-grid-small uk-child-width-expand uk-grid" uk-grid="">
-                  <div class="uk-first-column">Cena</div>
-                  <div class="tm-quantity-column">Ilość</div>
-                  <div>Razem</div>
-                  <div class="uk-width-auto">
-                    <div style="width: 20px;"></div>
-                  </div>
-                </div>
-              </div></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(item, index) in productPosition">
-            <td  class="uk-text-middle">
-              <div></div><img  :src="item.product.image" class="product-image"/> <span>{{item.product.name}}</span></td>
-            <!--<td class="uk-text-middle">{{item.product.name}}</td>-->
-            <td class="uk-text-middle">
-              <div class="">
-                <div class="uk-grid-small uk-child-width-1-1 uk-child-width-expand@s uk-text-center uk-grid" uk-grid="">
-                  <div class="uk-visible@m">
-                    <div>{{item.product.price | priceFormat}} zł</div>
-                  </div>
-                  <div>
-                    <a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>
-                    <div class="qty">{{item.quantity}}</div>
-                    <a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>
-                  </div>
-                  <div>
-                    <div>{{computeSubTotal(item) | priceFormat}} zł</div>
-                  </div>
-                  <div><a uk-icon="close" @click="productRemove(item, index)"></a></div>
-                </div>
-              </div>
-            </td>
-            <!--<td class="uk-text-middle">{{item.product.price | priceFormat}} zł</td>-->
-            <!--<td class="uk-text-middle">-->
-              <!--<a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>-->
-              <!--<div class="qty">{{item.quantity}}</div>-->
-              <!--<a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>-->
-            <!--</td>-->
-            <!--<td class="uk-text-middle">{{computeSubTotal(item) | priceFormat}} zł</td>-->
-            <!--<td class="uk-text-middle">-->
-              <!--<a uk-icon="close" @click="productRemove(item, index)"></a>-->
-            <!--</td>-->
-          </tr>
-          </tbody>
-          <tfoot>
-          <tr>
-            <th class="uk-text-middle">
-              Podsumowanie
-              <span class="uk-hidden@m uk-align-right">{{totalSumm | priceFormat}}</span>
-            </th>
-
-            <td class="uk-align-right uk-text-middle">
-              <div>
-                {{totalSumm | priceFormat}} zł
-              </div>
-            </td>
-          </tr>
-          </tfoot>
-        </table>
+        <vk-table v-if="this.productPosition.length" responsive :data="this.productPosition" rowKey="id">
+          <vk-table-column title="Produkt" cell="product.image">
+            <img class="" slot-scope="{cell}" :src="cell" width="100" alt="" />
+          </vk-table-column>
+          <vk-table-column class="uk-visible@m" title="" cell="product.name"></vk-table-column>
+          <vk-table-column title="Cena" cell="product.price">
+            <div slot-scope="{cell}">{{cell | priceFormat}} zł</div>
+          </vk-table-column>
+          <vk-table-column title="Ilość">
+            <span slot-scope="{row}">
+              <vk-icon-link class="mymargin" reset href="#" icon="minus" @click="minusQty(row, row.id)" ratio="0.5"></vk-icon-link>
+              {{row.quantity}}
+              <vk-icon-link class="mymargin" reset href="#" icon="plus" @click="plusQty(row, row.id)" ratio="0.6"></vk-icon-link>
+            </span>
+          </vk-table-column>
+          <vk-table-column title="Razem">
+            <div slot-scope="{ row }">{{ row.quantity * row.product.price | priceFormat}} zł</div>
+          </vk-table-column>
+          <vk-table-column title="" cell="">
+            <vk-icon-link reset href="#" icon="close" @click="productRemove(item, index)"></vk-icon-link>
+          </vk-table-column>
+        </vk-table>
 
       </div>
       <br><br>
@@ -104,7 +55,37 @@
       return {
         total:0,
         productPosition: [],
-        errors: []
+        errors: [],
+        pr1:[{
+          product:{id:1,
+            image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+            description: "Bawełniane spodnie",
+            name: "Spodnie",
+            price:100.90},
+          quantity:2
+        },{
+          product:{id:1,
+            image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+            description: "Bawełniane spodnie",
+            name: "Spodnie",
+            price:100.90},
+          quantity:2
+        },{
+          product:{id:1,
+            image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+            description: "Bawełniane spodnie",
+            name: "Spodnie",
+            price:100.90},
+          quantity:2
+        },{
+          product:{id:1,
+            image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+            description: "Bawełniane spodnie",
+            name: "Spodnie",
+            price:100.90},
+          quantity:2
+        },
+        ],
       }
     },
     methods:{
@@ -207,6 +188,7 @@
       },
     },
     created() {
+      this.productPosition=this.pr1;
       const api = axios.create({
         baseURL: 'http://localhost:8080',
         headers:{
@@ -231,6 +213,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+  .mymargin{
+    margin: 6px;
+  }
 
   .product-image{
     width: 100px;

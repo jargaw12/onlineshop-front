@@ -2,8 +2,8 @@
   <div>
     <br>
     <div class="uk-grid">
-      <div class="uk-width-1-4@m uk-box-shadow-small">
-        <section class="uk-card-small uk-card-body"><h4 class="uk-margin-small-bottom">Categories</h4>
+      <div class="uk-width-1-4@m">
+        <section class="uk-card-small uk-card-body" type="blank"><h4 class="uk-margin-small-bottom">Categories</h4>
           <ul class="uk-nav uk-nav-default">
             <li><a href="subcategory.html">Laptops</a></li>
             <li><a href="subcategory.html">Tablets</a></li>
@@ -65,7 +65,17 @@
         </section>
       </div>
       <div class="uk-width-expand@m">
-        <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-text-center" uk-grid>
+        <vk-breadcrumb>
+          <vk-breadcrumb-item href="#">Item</vk-breadcrumb-item>
+          <vk-breadcrumb-item href="#">Item</vk-breadcrumb-item>
+          <vk-breadcrumb-item>Active</vk-breadcrumb-item>
+        </vk-breadcrumb>
+        <vk-pagination align="right" :page.sync="page" :perPage="10" :total="100">
+          <vk-pagination-page-prev></vk-pagination-page-prev>
+          <vk-pagination-pages></vk-pagination-pages>
+          <vk-pagination-page-next></vk-pagination-page-next>
+        </vk-pagination>
+        <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-text-center uk-grid-divider" uk-grid>
           <div v-for="p in products">
             <product-card :p_id="p.id" :p_image="p.image" :p_description="p.description" :p_name="p.name" :p_price="p.price"></product-card>
           </div>
@@ -73,7 +83,12 @@
       </div>
     </div >
     <br>
-   <pagitation :number-of-pages="this.numberOfPages"></pagitation>
+    <vk-pagination align="right" :page.sync="page" :perPage="10" :total="100">
+      <vk-pagination-page-prev></vk-pagination-page-prev>
+      <vk-pagination-pages></vk-pagination-pages>
+      <vk-pagination-page-next></vk-pagination-page-next>
+    </vk-pagination>
+   <!--<pagitation :number-of-pages="this.numberOfPages"></pagitation>-->
     <br>
   </div>
 </template>
@@ -91,6 +106,45 @@
           showPostsPerPage: 2,
           filterBy: 'someCategory'
         },
+        page: 7,
+        pr1:[{
+          id:1,
+          image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+          description: "Bawełniane spodnie",
+          name: "Spodnie",
+          price:100.90,
+        },{
+          id:1,
+          image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+          description: "Bawełniane spodnie",
+          name: "Spodnie",
+          price:100.90,
+        },{
+          id:1,
+          image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+          description: "Bawełniane spodnie",
+          name: "Spodnie",
+          price:100.90,
+        },{
+          id:1,
+          image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+          description: "Bawełniane spodnie",
+          name: "Spodnie",
+          price:100.90,
+        },{
+          id:1,
+          image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+          description: "Bawełniane spodnie",
+          name: "Spodnie",
+          price:100.90,
+        },{
+          id:1,
+          image:"https://chekromul.github.io/uikit-ecommerce-template/images/products/1/1-large.jpg",
+          description: "Bawełniane spodnie",
+          name: "Spodnie",
+          price:100.90,
+        },
+        ],
         products: [],
         errors: [],
         pagesize:3,
@@ -106,6 +160,7 @@
     created() {
       console.log('create');
 
+      this.products=this.pr1;
       const api = axios.create({
         baseURL: 'http://localhost:8080',
         headers:{
