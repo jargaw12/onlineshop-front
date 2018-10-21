@@ -56,14 +56,18 @@
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
                   <vk-icon class="uk-form-icon" icon="mail"></vk-icon>
-                  <input class="uk-input" type="text" placeholder="E-mail">
+                  <input class="uk-input" type="text" placeholder="E-mail" v-model="username">
                 </div>
+              </div>
+
+              <div v-show="userExist" class="uk-alert-danger uk-width-2-3" uk-alert>
+                <p>Użytkownik o podanym adresie e-mail już istnieje</p>
               </div>
 
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
                   <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
-                  <input class="uk-input" type="password" placeholder="Hasło">
+                  <input class="uk-input" type="password" placeholder="Hasło" v-model="password">
                 </div>
               </div>
             </form>
@@ -89,6 +93,7 @@
         return {
           username: '',
           password: '',
+          userExist:false,
         }
       },
       methods:{
@@ -117,11 +122,12 @@
             },
           });
             api.post('signup',{
-              username: 'user2',
-              password: 'password2'
+              username: this.username,
+              password: this.password
             })
-              .then(console.log('rejestracja'))
+              .then(this.userExist=false)
               .catch(e => {
+                this.userExist=true;
                 console.log('error rejestracja');
               })
           }

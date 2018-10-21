@@ -7,6 +7,7 @@ import UserAccount from '@/components/UserAccount'
 import ShoppingCart from '@/components/ShoppingCart'
 import Order from '@/components/Order'
 import Login from '@/components/Login'
+import PageNotFound from '@/components/PageNotFound'
 
 Vue.use(Router)
 
@@ -52,6 +53,16 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/404',
+      name: 'PageNotFound',
+      component: PageNotFound
+    },
+    {
+      path: '*',
+      name: 'Other',
+      component: PageNotFound
     },
   ],
 })

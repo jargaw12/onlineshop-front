@@ -162,8 +162,9 @@
             console.log('product');
           })
           .catch(e => {
-            console.log('error');
-            console.log("Error: " + e);
+            if (e.response.status===404){
+              this.$router.replace({name: 'PageNotFound'})
+            }
           })
       },
     }

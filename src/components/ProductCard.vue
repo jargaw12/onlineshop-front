@@ -1,22 +1,4 @@
 <template>
-
-  <!--<div class="uk-card uk-card-default">-->
-    <!--<div class="uk-card-media-top">-->
-      <!--<router-link :to="{path: '/product/'+p_id }"><img :src="p_image" alt=""></router-link>-->
-    <!--</div>-->
-    <!--<div class="uk-card-body">-->
-      <!--<div>-->
-        <!--<h4 class="uk-text-truncate"><router-link :to="{path: '/product/'+p_id }">{{p_name}}</router-link></h4>-->
-      <!--</div>-->
-      <!--<div>-->
-        <!--<p class=" uk-text-truncate">{{p_description}}</p>-->
-      <!--</div>-->
-      <!--<div>-->
-        <!--{{p_price}} zł-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-
   <vk-card type="blank">
     <div slot="media-top">
       <router-link :to="{path: '/product/'+p_id }"><img :src="p_image" alt=""></router-link>
