@@ -20,6 +20,15 @@ const api2 = axios.create({
   }
 });
 
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  if(requiresAuth) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
 Vue.component('foo', Foo);
 
 new Vue({
@@ -29,7 +38,7 @@ new Vue({
     App
   },
   template: '<App/>'
-})
+});
 
 window.Vue = Vue;
 

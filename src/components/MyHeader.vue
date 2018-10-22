@@ -58,6 +58,7 @@
 
 <script>
   import axios from 'axios';
+  import store from "../store";
   export default {
     name: "MyHeader",
     data() {
@@ -84,6 +85,11 @@
         .catch(e => {
           console.log("Error: " + e);
         })
+    },
+    methods:{
+      logout() {
+        store.dispatch('logout')
+      }
     }
   }
 </script>

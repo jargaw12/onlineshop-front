@@ -14,7 +14,7 @@
                       <div class="uk-form-label">Login/e-mail</div>
                       <div class="uk-inline uk-width-2-3">
                         <vk-icon class="uk-form-icon" icon="user"></vk-icon>
-                        <input class="uk-input" type="text" placeholder="Login lub e-mail" v-model="username">
+                        <input class="uk-input" type="text" placeholder="Login lub e-mail" v-model="input_login.username">
                       </div>
                     </label>
                     </div>
@@ -22,7 +22,7 @@
                       <div class="uk-form-label">Hasło</div>
                       <div class="uk-inline uk-width-2-3">
                         <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
-                        <input class="uk-input" type="password" placeholder="Hasło" v-model="password">
+                        <input class="uk-input" type="password" placeholder="Hasło" v-model="input_login.password">
                       </div>
                     </label>
                     </div>
@@ -42,21 +42,21 @@
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
                   <vk-icon class="uk-form-icon" icon="user"></vk-icon>
-                  <input class="uk-input" type="text" placeholder="Imię">
+                  <input class="uk-input" type="text" placeholder="Imię" v-model="input_signin.firstname">
                 </div>
               </div>
 
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
                   <vk-icon class="uk-form-icon" icon="users"></vk-icon>
-                  <input class="uk-input" type="text" placeholder="Nazwisko">
+                  <input class="uk-input" type="text" placeholder="Nazwisko" v-model="input_signin.surname">
                 </div>
               </div>
 
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
                   <vk-icon class="uk-form-icon" icon="mail"></vk-icon>
-                  <input class="uk-input" type="text" placeholder="E-mail" v-model="username">
+                  <input class="uk-input" type="text" placeholder="E-mail" v-model="input_signin.username">
                 </div>
               </div>
 
@@ -67,7 +67,7 @@
               <div class="uk-margin">
                 <div class="uk-inline uk-width-2-3">
                   <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
-                  <input class="uk-input" type="password" placeholder="Hasło" v-model="password">
+                  <input class="uk-input" type="password" placeholder="Hasło" v-model="input_signin.password">
                 </div>
               </div>
             </form>
@@ -91,8 +91,16 @@
       components: {VkIcon},
       data() {
         return {
-          username: '',
-          password: '',
+          input_login:{
+            username: '',
+            password: '',
+          },
+          input_signin:{
+            username: '',
+            password: '',
+            firstname: '',
+            surname: "",
+          },
           userExist:false,
         }
       },
@@ -100,8 +108,8 @@
         login() {
           const params = new URLSearchParams();
           params.append('grant_type', 'password');
-          params.append('username', this.username);
-          params.append('password', this.password);
+          params.append('username', this.input_login.username);
+          params.append('password', this.input_login.password);
           axios({
             method:'post',
             url:'http://localhost:8080/oauth/token',
@@ -111,6 +119,8 @@
           })
             .then(function (response) {
               document.cookie="acces_token=" + response.data.access_token + ";path=/";
+              store.commit('setUsername', this.username);
+              store.commit('setAuth', true);
               this.$router.push({name: "Home"});
             });
         },
@@ -122,8 +132,8 @@
             },
           });
             api.post('signup',{
-              username: this.username,
-              password: this.password
+              username: this.input_signin.username,
+              password: this.input_signin.password
             })
               .then(this.userExist=false)
               .catch(e => {
