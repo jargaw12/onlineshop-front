@@ -32,7 +32,10 @@ export default new Router({
     {
       path: '/account',
       name: 'User Account',
-      component: UserAccount
+      component: UserAccount,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/cart',
@@ -42,12 +45,18 @@ export default new Router({
     {
       path: '/order/:id',
       name: 'Order',
-      component: Order
+      component: Order,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/payment',
       name: 'OrderAndPayment',
-      component: Order
+      component: Order,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',

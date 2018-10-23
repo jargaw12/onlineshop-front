@@ -49,6 +49,7 @@
 
 <script>
   import axios from 'axios';
+  import store from "../store";
   export default {
     name: 'ShoppingCart',
     data() {

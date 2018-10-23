@@ -20,6 +20,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "register-service-worker": "^1.0.0",
     "responsive": "^2.0.0",
+    "store.js": "^1.0.4",
     "uikit": "^3.0.0-rc.16",
     "vue": "^2.5.17",
     "vue-mq": "^0.2.1",
