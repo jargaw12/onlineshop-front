@@ -21,6 +21,15 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  if(requiresAuth) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
 Vue.component('foo', Foo);
 
 new Vue({
