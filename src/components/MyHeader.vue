@@ -7,7 +7,7 @@
           <vk-navbar-nav-dropdown class="uk-visible@m" title="Kategorie" navbar-aligned justified>
             <vk-navbar-nav-dropdown-nav>
               <vk-nav-item title="Active" active></vk-nav-item>
-              <vk-nav-item title="Item"></vk-nav-item>
+              <vk-nav-item title="List" @click="toList"></vk-nav-item>
               <vk-nav-item-header title="Header"></vk-nav-item-header>
               <vk-nav-item title="Item"></vk-nav-item>
               <vk-nav-item title="Item"></vk-nav-item>
@@ -30,7 +30,8 @@
 
         <vk-navbar-nav slot="right">
           <!--<vk-navbar-nav-item icon="search"></vk-navbar-nav-item>-->
-          <vk-nav-item class="uk-visible@m" href="/login" title="Zaloguj"></vk-nav-item>
+          <vk-nav-item v-if="!authenticated" class="uk-visible@m" href="/login" title="Zaloguj"></vk-nav-item>
+          <vk-nav-item v-if="authenticated" class="uk-visible@m" href="/account" title="Konto"></vk-nav-item>
           <vk-navbar-nav-item class="uk-hidden@m" href="/login" icon="user"></vk-navbar-nav-item>
           <vk-nav-item class="uk-visible@m" title="Koszyk" href="/cart"></vk-nav-item>
           <vk-navbar-nav-item class="uk-hidden@m" icon="cart" href="/cart"></vk-navbar-nav-item>
@@ -42,7 +43,7 @@
           <h3>Logo</h3>
           <vk-nav-item title="Active" active></vk-nav-item>
           <vk-nav-item-parent title="Parent">
-            <vk-nav-item title="Sub Item"></vk-nav-item>
+            <vk-nav-item title="List" href="/list"></vk-nav-item>
             <vk-nav-item title="Sub Item"></vk-nav-item>
           </vk-nav-item-parent>
           <vk-nav-item-header v-if="authenticated" title="Konto"></vk-nav-item-header>
@@ -59,6 +60,7 @@
 </template>
 
 <script>
+  import router from '../router'
   import axios from 'axios';
   import store from "../store";
   export default {
@@ -74,7 +76,7 @@
         return this.$store.state.count
       },
       authenticated() {
-        return this.$store.state.authenticated;
+        return this.$store.getters.isLoggedIn;
       }
     },
     created() {
@@ -94,6 +96,9 @@
     methods:{
       logout() {
         store.dispatch('logout');
+      },
+      toList(){
+        router.push({path: 'list', query: { page: 1, size:3 }});
       }
     }
   }

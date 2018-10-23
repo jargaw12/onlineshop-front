@@ -15,7 +15,8 @@ export default new Vuex.Store({
   },
   state: {
     count: 0,
-    authenticated: true,
+    // authenticated: true,
+    token: localStorage.getItem('user-token') || '',
     username: null
   },
   mutations: {
@@ -29,7 +30,11 @@ export default new Vuex.Store({
       this.state.username=user;
     },
     setAuth(have){
-      this.state.authenticated = have === true;
+      if (have)
+        this.state.token = localStorage.getItem('user-token');
+      else
+        this.state.token = '';
+      // this.state.authenticated = have === false;
     }
   },
   actions: {
@@ -50,4 +55,9 @@ export default new Vuex.Store({
       this.commit('setAuth',false);
     }
   },
+  getters : {
+    isLoggedIn: state => {
+      return state.token !== '';
+    }
+  }
 });

@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import Foo from './components/MyFooter'
 import router from './router'
+import store from './store'
 import Vuikit from 'vuikit'
 import VuikitIcons from '@vuikit/icons'
 import '@vuikit/theme'
@@ -13,21 +14,15 @@ Vue.use(Vuikit);
 Vue.use(VuikitIcons);
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  if(requiresAuth) {
-    next('/login');
-  } else {
-    next();
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLoggedIn) {
+      next( '/login')
+    } else {
+      next()
+    }
   }
-});
-
-router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  if(requiresAuth) {
-    next('/login');
-  } else {
+  else
     next();
-  }
 });
 
 Vue.component('foo', Foo);
@@ -38,7 +33,10 @@ new Vue({
   components: {
     App,
   },
-  template: '<App/>'
+  template: '<App/>',
+  create(){
+    store.commit('setAuth',localStorage.getItem('user-token'))
+  }
 });
 
 window.Vue = Vue;

@@ -90,6 +90,7 @@
 </template>
 
 <script>
+  import router from '../router'
   import store from "../store"
   import axios from 'axios'
   export default {
@@ -123,12 +124,17 @@
           data:params,
         })
           .then(function (response) {
-            document.cookie="acces_token=" + response.data.access_token + ";path=/";
+            const token=response.data.access_token;
+            document.cookie="acces_token=" + token + ";path=/";
+            localStorage.setItem('user-token', token);
             store.commit('setUser', input_login.username);
             store.commit('setAuth', true);
-            localStorage.setItem('user-token', token);
-            // this.$route.push({name: "Home"});
-          }).catch(e=>localStorage.removeItem('user-token'));
+            router.push({name: "Home"});
+          }).catch(e=>{
+          console.log("logowanie-error");
+          console.log(e);
+          localStorage.removeItem('user-token');
+          });
       },
       signup(){
         const api = axios.create({
