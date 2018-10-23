@@ -15,7 +15,7 @@ export default new Vuex.Store({
   },
   state: {
     count: 0,
-    authenticated: false,
+    authenticated: true,
     username: null
   },
   mutations: {
@@ -28,7 +28,7 @@ export default new Vuex.Store({
     setUser(user){
       this.state.username=user;
     },
-    setAuth(state, have){
+    setAuth(have){
       this.state.authenticated = have === true;
     }
   },
@@ -47,6 +47,7 @@ export default new Vuex.Store({
     logout(){
       delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem('user-token');
+      this.commit('setAuth',false);
     }
   },
 });

@@ -9,10 +9,10 @@
             <form class="uk-form-stacked">
               <!--<div class="uk-grid-medium uk-child-width-2-3 uk-grid uk-grid-stack" uk-grid="">-->
               <fieldset class="uk-fieldset uk-first-column">
-                <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-1@s uk-grid" uk-grid="">
+                <div class="uk-grid-small uk-child-width-1-1 uk-grid uk-container">
                   <div class="uk-first-column"><label>
                     <div class="uk-form-label">Login/e-mail</div>
-                    <div class="uk-inline uk-width-2-3">
+                    <div class="uk-inline uk-width-1-1 uk-width-2-3@m">
                       <vk-icon class="uk-form-icon" icon="user"></vk-icon>
                       <input class="uk-input" type="text" placeholder="Login lub e-mail" v-model="input_login.username">
                     </div>
@@ -20,9 +20,9 @@
                   </div>
                   <div><label>
                     <div class="uk-form-label">Hasło</div>
-                    <div class="uk-inline uk-width-2-3">
+                    <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-container">
                       <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
-                      <input class="uk-input" type="password" placeholder="Hasło" v-model="input_login.password">
+                      <input class="uk-input" type="password" placeholder="Hasło" v-model="input_login.password" @keyup.enter="login(input_login)">
                     </div>
                   </label>
                   </div>
@@ -32,7 +32,7 @@
             </form>
             <br><br>
             <div class="mybtn">
-              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="login(input_login)">Zaloguj</button>
+              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="login(input_login)" >Zaloguj</button>
             </div>
             <a class=" uk-width-1-2 c-right">Zapomniałeś hasła?</a>
           </vk-tabs-item>
@@ -79,6 +79,12 @@
         </vk-tabs>
       </div>
     </vk-card>
+
+    <!--<vk-card>-->
+      <!--<div class="uk-container uk-width-1-2">-->
+        <!--<input class="uk-input" type="text" placeholder="E-mail">-->
+      <!--</div>-->
+    <!--</vk-card>-->
 
   </div>
 </template>

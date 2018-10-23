@@ -29,7 +29,7 @@
         <vk-navbar-logo slot="center" class="uk-link-reset uk-active"><a href="/">Logo</a></vk-navbar-logo>
 
         <vk-navbar-nav slot="right">
-          <vk-navbar-nav-item icon="search"></vk-navbar-nav-item>
+          <!--<vk-navbar-nav-item icon="search"></vk-navbar-nav-item>-->
           <vk-nav-item class="uk-visible@m" href="/login" title="Zaloguj"></vk-nav-item>
           <vk-navbar-nav-item class="uk-hidden@m" href="/login" icon="user"></vk-navbar-nav-item>
           <vk-nav-item class="uk-visible@m" title="Koszyk" href="/cart"></vk-nav-item>
@@ -45,11 +45,13 @@
             <vk-nav-item title="Sub Item"></vk-nav-item>
             <vk-nav-item title="Sub Item"></vk-nav-item>
           </vk-nav-item-parent>
-          <vk-nav-item-header title="Header"></vk-nav-item-header>
-          <vk-nav-item title="Item" icon="table"></vk-nav-item>
-          <vk-nav-item title="Item" icon="thumbnails"></vk-nav-item>
+          <vk-nav-item-header v-if="authenticated" title="Konto"></vk-nav-item-header>
+          <vk-nav-item v-if="authenticated" title="Konto" icon="user"></vk-nav-item>
+          <vk-nav-item v-if="authenticated" title="Koszyk" icon="cart"></vk-nav-item>
+          <vk-nav-item v-if="authenticated" title="Zamówienia" icon="credit-card"></vk-nav-item>
           <vk-nav-item-divider></vk-nav-item-divider>
-          <vk-nav-item title="Item" icon="trash"></vk-nav-item>
+          <vk-nav-item v-if="authenticated" title="Wyloguj" icon="sign-out" @click="logout"></vk-nav-item>
+
         </vk-nav>
       </vk-offcanvas>
     </vk-offcanvas-content>
@@ -70,6 +72,9 @@
     computed: {
       count() {
         return this.$store.state.count
+      },
+      authenticated() {
+        return this.$store.state.authenticated;
       }
     },
     created() {
@@ -88,17 +93,30 @@
     },
     methods:{
       logout() {
-        store.dispatch('logout')
+        store.dispatch('logout');
       }
     }
   }
 </script>
 
 <style scoped>
-  vk-offcanvas>* {
-    color: rgba(0, 0, 0, 0.5);
+  .uk-offcanvas-bar h3{
+    color: #666;
   }
-  h6 {
-    color: #000;
+
+  .uk-offcanvas-bar p{
+    color: #666;
+  }
+
+  .uk-offcanvas-bar .uk-nav-default .uk-nav-header{
+    color: #666;
+  }
+
+  .uk-offcanvas-bar .uk-nav-default>li>a{
+    color: #666;
+  }
+
+  .uk-offcanvas-bar .uk-nav-default .uk-nav-sub a{
+    color: #666;
   }
 </style>

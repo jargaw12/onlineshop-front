@@ -56,6 +56,28 @@
               </div>
             </li>
             <li>
+              <a class="uk-accordion-title" href="#">Rozmiar</a>
+              <div class="uk-accordion-content">
+                <form class="uk-form-stacked">
+                  <div class="uk-grid-medium uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                    <fieldset class="uk-fieldset uk-first-column">
+                      <ul class="uk-list">
+                        <li>
+                          <label><input class="uk-checkbox" type="checkbox"> Lenovo</label>
+                        </li>
+                        <li>
+                          <label><input class="uk-checkbox" type="checkbox"> Dell</label>
+                        </li>
+                        <li>
+                          <label><input class="uk-checkbox" type="checkbox"> Asus</label>
+                        </li>
+                      </ul>
+                    </fieldset>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li>
               <a class="uk-accordion-title" href="#">Kolor</a>
               <div class="uk-accordion-content">
                 <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat proident.</p>

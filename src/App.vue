@@ -12,6 +12,7 @@
 <script>
   import Foo from './components/MyFooter.vue'
   import Hea from './components/MyHeader.vue'
+  import router from './router'
   import store from './store'
   import axios from 'axios'
 
@@ -23,6 +24,7 @@
       Hea,
     },
     store,
+    router,
     data() {
       return {
       }
