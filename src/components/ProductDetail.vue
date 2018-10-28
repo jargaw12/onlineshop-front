@@ -1,7 +1,7 @@
 <template>
   <div>
-
-    <div class="uk-child-width-1-2 uk-text-center" uk-grid>
+  <br><br>
+    <div class="uk-child-width-1-2@s uk-text-center" uk-grid>
       <div>
       <div class="uk-position-relative" uk-slideshow="animation: fade">
         <ul class="uk-slideshow-items">
@@ -24,13 +24,6 @@
       <h4>{{this.product.name}}</h4>
         <p>{{this.product.price}}</p>
 
-        <div>
-          <form>
-            <a class="qty-minus" uk-icon="minus" v-on:click="minusQty(item, index)" ratio="0.5"></a>
-            <div class="qty"><input class="uk-input" type="text" min="1" value="1"/></div>
-            <a class="qty-plus" uk-icon="plus" v-on:click="plusQty(item, index)" ratio="0.5"></a>
-          </form>
-          </div>
         <br><br>
         <div class="uk-child-width-expand@s uk-text-center" uk-grid>
           <button  class="uk-button uk-button-secondary uk-width-1-2 uk-align-center">Płatność <span class="uk-margin-small-right" uk-icon="chevron-right"></span></button>
@@ -40,8 +33,8 @@
     </div>
 
     <ul uk-tab>
-      <li><a href="#">Opis</a></li>
-      <li><a href="#">Specyfikacja</a></li>
+      <li><a href="#">Opis produktu</a></li>
+      <li><a href="#">Detale</a></li>
       <li><a href="#">Opinie</a></li>
     </ul>
 
@@ -123,7 +116,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  // import axios from 'axios';
   export default {
       data () {
         return {
@@ -150,20 +143,14 @@
         },
       },
       created(){
-        const api = axios.create({
-          baseURL: 'http://localhost:8080',
-          headers:{
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-          }
-        });
-        api.get('/product/'+this.$route.params.id)
+        this.$http.get('/product/'+this.$route.params.id)
           .then(response => {
             this.product = response.data;
             console.log('product');
           })
           .catch(e => {
             if (e.response.status===404){
-              this.$router.replace({name: 'PageNotFound'})
+              this.$router.push({name: 'PageNotFound'})
             }
           })
       },

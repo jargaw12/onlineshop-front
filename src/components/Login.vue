@@ -90,9 +90,9 @@
 </template>
 
 <script>
-  import router from '../router'
-  import store from "../store"
-  import axios from 'axios'
+  // import router from '../router'
+  // import store from "../store"
+  // import axios from 'axios'
   export default {
     name: "Login",
     data() {
@@ -112,24 +112,32 @@
     },
     methods:{
       login(input_login) {
-        const params = new URLSearchParams();
-        params.append('grant_type', 'password');
-        params.append('username', input_login.username);
-        params.append('password', input_login.password);
-        axios({
-          method:'post',
-          url:'http://localhost:8080/oauth/token',
-          auth:{username:'frontclient',password: 'frontpassword'},
-          // headers:{"Content-Type": "application/x-www-form-urlencoded"},
-          data:params,
-        })
-          .then(function (response) {
+        // const params = new URLSearchParams();
+        // params.append('grant_type', 'password');
+        // params.append('username', input_login.username);
+        // params.append('password', input_login.password);
+        // axios({
+        //   method:'post',
+        //   url:'http://localhost:8080/oauth/token',
+        //   auth:{username:'frontclient',password: 'frontpassword'},
+        //   // headers:{"Content-Type": "application/x-www-form-urlencoded"},
+        //   data:params,
+        // })
+          this.$http.post('oauth/token',{},{
+            params:{
+              grant_type:'password',
+              username: input_login.username,
+              password: input_login.password},
+              auth:{username:'frontclient',password: 'frontpassword'}
+            })
+          .then( (response) => {
             const token=response.data.access_token;
-            document.cookie="acces_token=" + token + ";path=/";
+            // this.$store.dispatch('logout',{token,input_login});
+            // document.cookie="acces_token=" + token + ";path=/";
             localStorage.setItem('user-token', token);
-            store.commit('setUser', input_login.username);
-            store.commit('setAuth', true);
-            router.push({name: "Home"});
+            this.$store.commit('setUser', input_login.username);
+            this.$store.commit('setAuth', true);
+            this.$router.push({name: "Home"});
           }).catch(e=>{
           console.log("logowanie-error");
           console.log(e);
@@ -137,13 +145,7 @@
           });
       },
       signup(){
-        const api = axios.create({
-          baseURL: 'http://localhost:8080',
-          headers:{
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-          },
-        });
-        api.post('signup',{
+        this.$http.post('signup',{
           username: this.input_signin.username,
           password: this.input_signin.password
         })

@@ -2,14 +2,15 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import Foo from './components/MyFooter'
-import router from './router'
-import store from './store'
+import router from './router/index.js'
+import axios from './axios.js'
+import store from './store.js'
 import Vuikit from 'vuikit'
 import VuikitIcons from '@vuikit/icons'
 import '@vuikit/theme'
 
 Vue.config.productionTip = false;
+Vue.prototype.$http = axios;
 Vue.use(Vuikit);
 Vue.use(VuikitIcons);
 
@@ -25,11 +26,10 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
-Vue.component('foo', Foo);
-
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App,
   },

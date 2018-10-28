@@ -8,7 +8,7 @@
       <p class=" uk-text-truncate">{{p_description}}</p>
     </div>
         {{p_price}} zł
-    <div ><vk-icon-button  href="#" icon="cart"></vk-icon-button></div>
+    <div ><vk-icon-button  href="#" icon="cart" @click="add(p_id)"></vk-icon-button></div>
 
     <!--<span><vk-icon-button href="#" icon="cart"></vk-icon-button>-->
       <!--{{p_price}} zł-->
@@ -22,26 +22,19 @@
     name: "ProductCard",
     props: ['p_id', 'p_name', 'p_description', 'p_price', 'p_image'],
     methods:{
-      add(p){
-        const api = axios.create({
-          baseURL: 'http://localhost:8080',
-          headers:{
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        });
-        api.post('/shoppingcart', p_id)
+      add(id){
+
+        this.$http.post('/shoppingcart/',id)
           .then(response => {
-            this.$emit('add', 1);
-            console.log("Dodano produkt: " + p_id)
+            this.$store.commit('plus', 1);
+            console.log("Dodano nowy produkt nr: " +  id)
           })
           .catch(e => {
-            console.log('Nie można dodac produktu' +p_id + "o id: " + p_id);
+            console.log('Nie można dodac produktu');
             console.log("Error: " + e);
             console.log("Error: " + e.response);
-            this.errors.push(e.response)
-          })
+            // this.errors.push(e.response)
+          });
       }
     }
   }

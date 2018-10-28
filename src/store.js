@@ -2,13 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
 
-const http = axios.create({
-  baseURL: 'http://localhost:8080',
-  headers:{
-    'Access-Control-Allow-Origin': 'http://localhost:8080',
-  }
-});
-
 Vue.use(Vuex);
 export default new Vuex.Store({
   modules:{
@@ -21,19 +14,19 @@ export default new Vuex.Store({
   },
   mutations: {
     plus (state, n) {
-      this.state.count += n
+      state.count += n
     },
     minus (state, n) {
-      this.state.count-= n
+      state.count-= n
     },
-    setUser(user){
-      this.state.username=user;
+    setUser(state,user){
+      state.username=user;
     },
-    setAuth(have){
+    setAuth(state,have){
       if (have)
-        this.state.token = localStorage.getItem('user-token');
+        state.token = localStorage.getItem('user-token');
       else
-        this.state.token = '';
+        state.token = '';
       // this.state.authenticated = have === false;
     }
   },
@@ -49,6 +42,11 @@ export default new Vuex.Store({
           localStorage.removeItem('user-token');
         })
     },
+    login(param){
+      localStorage.setItem('user-token', param.token);
+      this.$store.commit('setUser', param.user.username);
+      this.$store.commit('setAuth', true);
+    },
     logout(){
       delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem('user-token');
@@ -59,5 +57,8 @@ export default new Vuex.Store({
     isLoggedIn: state => {
       return state.token !== '';
     }
+  },
+  setters :{
+
   }
 });

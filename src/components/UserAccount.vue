@@ -117,13 +117,13 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  // import axios from 'axios';
 
   export default {
     name: "UserAccount",
     data() {
       return {
-        total: 0,
+        totalPages: 0,
         url:1111111,
         orders: [],
         errors: []
@@ -135,14 +135,7 @@
       }
       },
     created() {
-      console.log('create');
-      const api = axios.create({
-        baseURL: 'http://localhost:8080',
-        headers:{
-          'Access-Control-Allow-Origin': 'http://localhost:8080',
-        }
-      });
-      api.get('/orders')
+      this.$http.get('/orders')
         .then(response => {
           this.orders = response.data;
           console.log('orders');

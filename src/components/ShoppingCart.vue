@@ -20,23 +20,27 @@
           </vk-table-column>
           <vk-table-column title="Ilość">
             <span slot-scope="{row}">
-              <vk-icon-link class="mymargin" reset href="#" icon="minus" @click="minusQty(row, row.id)" ratio="0.5"></vk-icon-link>
-              {{row.quantity}}
-              <vk-icon-link class="mymargin" reset href="#" icon="plus" @click="plusQty(row, row.id)" ratio="0.6"></vk-icon-link>
+              <vk-icon-link class="mymargin" reset href="#" icon="minus" @click="minusQty(row.product.id)" ratio="0.5"></vk-icon-link>
+              {{row.quantity }}
+              <vk-icon-link class="mymargin" reset href="#" icon="plus" @click="plusQty(row.product.id)" ratio="0.6"></vk-icon-link>
             </span>
           </vk-table-column>
           <vk-table-column title="Razem">
-            <div slot-scope="{ row }">{{ row.quantity * row.product.price | priceFormat}} zł</div>
+            <div slot-scope="{ row }">{{computeSubTotal(row)}} zł</div>
           </vk-table-column>
-          <vk-table-column title="" cell="">
-            <vk-icon-link reset href="#" icon="close" @click="productRemove(item, index)"></vk-icon-link>
+          <vk-table-column title="">
+            <span slot-scope="{row}">
+              <vk-icon-link reset href="#" icon="close" @click="productRemove(row)"></vk-icon-link>
+            </span>
           </vk-table-column>
         </vk-table>
+        <hr>
+        <h4>Łączna kwota: {{totalSumm}} zł </h4>
 
       </div>
       <br><br>
       <div class="uk-child-width-expand@s uk-text-center" uk-grid>
-      <button  class="uk-button uk-button-secondary uk-width-1-2 uk-align-center">Płatność <span class="uk-margin-small-right" uk-icon="chevron-right"></span></button>
+      <button  class="uk-button uk-button-secondary uk-width-1-2 uk-align-center" @click="toPayment">Zrealizuj zamówienie <span class="uk-margin-small-right" uk-icon="chevron-right"></span></button>
       </div>
       <!--<div class="center">-->
         <!--<a class="waves-effect btn-large grey white-text"><i class="material-icons right">navigate_next</i>Przejdź do platnosci</a>-->
@@ -48,13 +52,13 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import store from "../store";
+  // import axios from 'axios';
+  // import store from "../store";
   export default {
     name: 'ShoppingCart',
     data() {
       return {
-        total:0,
+        totalPages:0,
         productPosition: [],
         errors: [],
         pr1:[{
@@ -93,19 +97,12 @@
       computeSubTotal: function(item) {
         return(parseFloat(item.product.price.toString().replace(",",".")) * parseFloat(item.quantity)).toFixed(2).replace(".",",");
       },
-      productRemove (p, productId) {
-        const api = axios.create({
-          baseURL: 'http://localhost:8080',
-          headers:{
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-          }
-        });
-        api.delete('/shoppingcart/'+ p.product.id)
+      productRemove (row) {
+        const prod=this.productPosition.find(p => p.product.id === row.product.id);
+        this.$http.delete('/shoppingcart/'+ prod.product.id)
           .then(response => {
-             // this.$bus.$emit('remove', p.quantity);
-            store.commit('minus', p.quantity);
-            this.productPosition.splice(productId, p.quantity);
-            console.log("Usunieto produkt nr: " + p.product.id)
+            this.$store.commit('minus', row.quantity);
+            this.$delete(this.productPosition, row.__vkTable_rowId)
           })
           .catch(e => {
             console.log('Nie można usunąć produktu z listy');
@@ -114,20 +111,13 @@
             this.errors.push(e.response)
           })
       },
-      plusQty: function(buy_data,productId){
+      plusQty: function(id){
 
-        const api = axios.create({
-          baseURL: 'http://localhost:8080',
-          headers:{
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-          }
-        });
-        api.patch('/shoppingcart/'+ buy_data.product.id, 1)
+        this.$http.post('/shoppingcart/'+ id, 1)
           .then(response => {
-            buy_data.quantity=parseInt(buy_data.quantity) + parseInt(1);
-            // this.$bus.$emit('add', 1);
-            store.commit('plus', 1);
-            console.log("Zwiększono produkt nr: " +  buy_data.id)
+            this.productPosition.find(p => p.product.id === id).quantity+=1;
+            this.$store.commit('plus', 1);
+            console.log("Zwiększono produkt nr: " +  id)
           })
           .catch(e => {
             console.log('Nie można powiększyć produktu');
@@ -137,25 +127,13 @@
           })
 
       },
-      minusQty: function(buy_data,productId){
-        buy_data.quantity = parseInt(buy_data.quantity) - parseInt(1);
-        // this.$bus.$emit('remove', 1)
-        store.commit('minus', 1);
-        if (buy_data.quantity < 1){
-          buy_data.quantity = 1;
-        }
-        else {
-          const api = axios.create({
-            baseURL: 'http://localhost:8080',
-            headers:{
-              'Access-Control-Allow-Origin': 'http://localhost:8080',
-            }
-          });
-          api.patch('/shoppingcart/'+ buy_data.product.id, -1)
+      minusQty: function(id){
+        const prod=this.productPosition.find(p => p.product.id === id);
+        if (prod.quantity > 1){
+          this.$http.post('/shoppingcart/'+ id, -1)
             .then(response => {
-              //this.$bus.$emit('remove', 1);
-              store.commit('minus', 1);
-              console.log("Zmniejszono produkt nr: " + buy_data.product.id)
+              this.$store.commit('minus', 1);
+              prod.quantity-=1;
             })
             .catch(e => {
               console.log('Nie można zmniejszyc produktu');
@@ -165,12 +143,15 @@
             })
         }
       },
+      toPayment(){
+        this.$router.push({name: "OrderAndPayment"})
+      }
     },
     filters: {
       priceFormat: function (value) {
-        if (!value) return ''
-        value = value.toString()
-        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+        if (!value) return '';
+        // value = value.toString();
+        return value.toFixed(2).replace(".",",");
       }
     },
     computed: {
@@ -189,16 +170,8 @@
       },
     },
     created() {
-      this.productPosition=this.pr1;
-      const api = axios.create({
-        baseURL: 'http://localhost:8080',
-        headers:{
-          'Access-Control-Allow-Origin': 'http://localhost:8080',
-        }
-      });
-
-      api
-        .get('/shoppingcart')
+      // this.productPosition=this.pr1;
+      this.$http.get('/shoppingcart')
   .then(response => {
     this.productPosition = response.data;
     console.log("Dodano liste produktów o długości: " + this.productPosition.length)

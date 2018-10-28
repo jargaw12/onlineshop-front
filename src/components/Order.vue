@@ -92,7 +92,7 @@
     name: "Order",
     data() {
       return {
-        total:0,
+        totalPages:0,
         productPosition: [],
         order:null,
         errors: []

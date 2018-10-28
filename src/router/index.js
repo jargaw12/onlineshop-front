@@ -5,7 +5,7 @@ import ProductDetail from '@/components/ProductDetail'
 import ProductList from '@/components/ProductList'
 import UserAccount from '@/components/UserAccount'
 import ShoppingCart from '@/components/ShoppingCart'
-import Order from '@/components/Order'
+import Order from '@/components/OrderAndPayment'
 import Login from '@/components/Login'
 import PageNotFound from '@/components/PageNotFound'
 
@@ -27,7 +27,10 @@ export default new Router({
     {
       path: '/list',
       name: 'Product List',
-      component: ProductList
+      component: ProductList,
+      props: (route) => ({
+        to: route.query.page,
+      })
     },
     {
       path: '/account',
