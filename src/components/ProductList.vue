@@ -3,13 +3,11 @@
     <br>
     <div class="uk-grid">
       <div class="uk-width-1-4@m">
-        <section class="uk-card-small uk-card-body" type="blank"><h4 class="uk-margin-small-bottom">Categories</h4>
+        <section class="uk-card-small uk-card-body" type="blank">{{category.categoryname.name}}<h4 class="uk-margin-small-bottom"></h4>
           <ul class="uk-nav uk-nav-default">
-            <li><a href="subcategory.html">Laptops</a></li>
-            <li><a href="subcategory.html">Tablets</a></li>
-            <li><a href="subcategory.html">Peripherals</a></li>
-            <li><a href="subcategory.html">Keyboards</a></li>
-            <li><a href="subcategory.html">Accessories</a></li>
+            <li v-for="s in category.subcategories">
+              <a @click="changeSubcategory(s.id)">{{s.name}}</a>
+            </li>
           </ul>
         </section>
         <section class="uk-card-small uk-card-body">
@@ -87,12 +85,7 @@
         </section>
       </div>
       <div class="uk-width-expand@m">
-        <vk-breadcrumb>
-          <vk-breadcrumb-item href="#">Item</vk-breadcrumb-item>
-          <vk-breadcrumb-item href="#">Item</vk-breadcrumb-item>
-          <vk-breadcrumb-item>Active</vk-breadcrumb-item>
-        </vk-breadcrumb>
-        <vk-pagination align="right" :page.sync="pageNumber" :perPage.sync="pageSize" :total.sync="pagesTotal">
+        <vk-pagination align="right" :page.sync="pageNumber" :perPage.sync="pageSize" :total.sync="pageTotal">
           <vk-pagination-page-prev></vk-pagination-page-prev>
           <vk-pagination-pages></vk-pagination-pages>
           <vk-pagination-page-next></vk-pagination-page-next>
@@ -112,29 +105,24 @@
           <option :value='{"by": "name", "dir":"desc"}'>Nazwa malejąco</option>
           <option :value='{"by": "name", "dir":"asc"}'>Nazwa rosnąco</option>
           </select>
-          <!--<select class="uk-select" v-model="orderBy">-->
-            <!--<option disabled="true">Sortuj</option>-->
-            <!--<option :value="price_desc">Cena malejąco</option>-->
-            <!--<option :value="price_asc">Cena rosnąco</option>-->
-            <!--<option :value="name_desc">Nazwa malejąco</option>-->
-            <!--<option :value="price_asc">Nazwa rosnąco</option>-->
-          <!--</select>-->
         </div>
 
-        <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-text-center uk-grid-divider" uk-grid uk-scrollspy="cls: uk-animation-fade; target: .uk-card; delay: 50; repeat: false">
+        <div v-if="pageTotal>0" class="uk-child-width-1-2@s uk-child-width-1-3@m uk-text-center uk-grid-divider" uk-grid uk-scrollspy="cls: uk-animation-fade; target: .uk-card; delay: 50; repeat: false">
           <div v-for="p in products">
             <product-card :p_id="p.id" :p_image="p.image" :p_description="p.description" :p_name="p.name" :p_price="p.price"></product-card>
           </div>
         </div>
+        <div v-else>
+          <h4 class="uk-text-center">Brak produktów</h4>
+        </div>
       </div>
     </div >
     <br>
-    <vk-pagination align="right" :page.sync="pageNumber" :perPage.sync="pageSize" :total.sync="pagesTotal">
+    <vk-pagination align="right" :page.sync="pageNumber" :perPage.sync="pageSize" :total.sync="pageTotal">
       <vk-pagination-page-prev></vk-pagination-page-prev>
       <vk-pagination-pages></vk-pagination-pages>
       <vk-pagination-page-next></vk-pagination-page-next>
     </vk-pagination>
-   <!--<pagitation :number-of-pages="this.numberOfPages"></pagitation>-->
     <br>
   </div>
 </template>
@@ -145,26 +133,12 @@
   import Pagitation from "./Pagitation";
   // import router from '../router'
   export default {
-    name: 'ProductList2',
+    name: 'ProductList',
     data() {
       return {
         products: [],
         errors: [],
-        // orderBy:{
-        //   order,
-        //   dir,
-        // },
-          pageSize:3,
-          pageNumber:1,
-          pagesTotal:0,
-        order:{
-          by:null,
-          direction:null,
-        }
 
-        // pageSize:3,
-        // activePage:1,
-        // totalPages:0,
       }
     },
     components: {
@@ -172,94 +146,105 @@
       ProductCard
 
     },
+    computed: {
+      pageTotal:{
+        get: function () {
+          return this.$store.state.page.total;
+        },
+        set: function (newValue) {
+          this.$store.commit('setPageTotal',newValue);
+        }
+      },
+      pageNumber:{
+        get: function () {
+          return this.$store.state.page.number;
+        },
+        set: function (newValue) {
+          this.$store.commit('setPageNumber',newValue);
+          this.$router.push({name:'Product List',path :this.pathString, query: { page: newValue, size: this.pageSize, order: this.order.by, dir: this.order.dir}});
+          this.getPage();
+        }
+      },
+      pageSize:{
+        get: function () {
+          return this.$store.state.page.size;
+        },
+        set: function (newValue) {
+          this.$store.commit('setPageNumber',1);
+          this.$store.commit('setPageSize',newValue);
+          this.$router.push({name:'Product List',path :this.pathString, query: { page: this.pageNumber, size: newValue, order: this.order.by, dir: this.order.dir}});
+          this.getPage();
+        }
+      },
+      order:{
+        get: function () {
+          return this.$store.state.page.order;
+        },
+        set: function (newValue) {
+          this.$store.commit('setPageNumber',1);
+          this.$store.commit('setSortSettings',newValue);
+          this.$router.push({name:'Product List',path :this.pathString, query: { page: this.pageNumber, size: this.pageSize, order: newValue.by, dir: newValue.dir}});
+          this.getPage();
+        }
+      },
+      category() {
+        return this.$store.getters.getCategory
+      },
+      group(){
+        return this.$store.getters.getGroup
+      },
+      subcategory(){
+        return this.$store.getters.getSubcategory
+      },
+      path(){
+        if(this.subcategory === undefined)
+          return '/'+this.category.id;
+        else return '/'+this.category.id+'/'+this.subcategory.id;
+      },
+      pathString(){
+        var path='/'+this.group.name.toLowerCase()+'/'+this.category.categoryname.name.toLowerCase();
+        if(this.subcategory !== undefined)
+          path+='/'+this.subcategory.name.toLowerCase();
+         return path.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      }
+    },
     created() {
-      console.log("Params: " +this.$route.params);
-      console.log("Query: " +this.$route.query);
-
-      console.log('create');
-
-      this.pageNumber=Number(this.$route.query.page);
-      this.pageSize=Number(this.$route.query.size);
-      // this.$route.query.order!=null ? this.order.by=Number(this.$route.query.order) : this.order.by=null;
-      // this.$route.query.dir!=null ? this.order.dir=Number(this.$route.query.dir) :  this.order.dir=null;
-      // this.products=this.pr1;
-
-      this.$http.get(`/productlist`,{ params: { page: this.pageNumber, size:this.pageSize, order:this.order.by, dir:this.order.dir } })
-        .then(response => {
-          this.products = response.data.content;
-          this.numberOfPages = response.data.totalPages;
-          this.pagesTotal=response.data.totalElements;
-          console.log('products');
-        })
-        .catch(e => {
-          console.log('error');
-          console.log("Error: " + e);
-          // this.errors.push(e.response)
-        })
+      this.$store.commit('setPageNumber',Number(this.$route.query.page));
+      this.$store.commit('setPageSize',Number(this.$route.query.size));
+      this.getPage();
     },
     methods: {
-      changePage(page){
-        this.$http.get(`/productlist`,{ params: { page: this.pageNumber, size:this.pageSize, order:this.order.by, dir:this.order.dir } })
+      getPage(){
+        this.$http.get(this.path ,{ params: { page: this.pageNumber, size:this.pageSize, order:this.order.by, dir:this.order.dir } })
           .then(response => {
+            this.$store.commit('setPageTotal',response.data.totalElements);
             this.products = response.data.content;
-            console.log('products');
           })
           .catch(e => {
-            console.log('error');
             console.log("Error: " + e);
-            this.errors.push(e.response)
-          });
+          })
+      },
+      changePage(){
+        this.getPage();
+      },
+      changeSubcategory(subcategory){
+        // this.$store.commit('setPageNumber',1);
+        this.$store.commit('setActiveSubcategory', subcategory);
+        // this.$router.push({name:'Product List',path :this.pathString, query: { page: 1, size: this.pageSize, order: this.order.by, dir: this.order.dir}});
+        this.$router.push({name:'Product List',params:{group:this.group.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "") ,category: this.category.categoryname.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ""),subcategory: this.subcategory.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")}, query: { page: 1, size: this.pageSize, order: this.order.by, dir: this.order.dir}});
+        // this.getPage();
       },
     },
-    watch:{
-      pageNumber: function () {
-        this.$http
-          .get(`/productlist`,{ params: { page: this.pageNumber, size:this.pageSize, order:this.order.by, dir:this.order.dir } })
-          .then(response => {
-            this.products = response.data.content;
-            console.log('products');
-          })
-          .catch(e => {
-            console.log('error');
-            console.log("Error: " + e);
-            this.errors.push(e.response)
-          });
-        this.$router.push({path: 'list', query: { page: this.pageNumber, size: this.pageSize }});
-      },
-      pageSize : function () {
-        this.$http
-          .get(`/productlist`,{ params: { page: this.pageNumber, size:this.pageSize, order:this.order.by, dir:this.order.dir } })
-          .then(response => {
-            this.products = response.data.content;
-            console.log('products');
-          })
-          .catch(e => {
-            console.log('error');
-            console.log("Error: " + e);
-            this.errors.push(e.response)
-          });
-        this.pageNumber=1;
-        this.$router.push({path: 'list', query: { page: this.pageNumber, size: this.pageSize }});
-      },
-      order : function () {
-        this.$http
-          .get(`/productlist`,{ params: { page: this.pageNumber, size:this.pageSize, order:this.order.by, dir:this.order.dir } })
-          .then(response => {
-            this.products = response.data.content;
-            console.log('products');
-          })
-          .catch(e => {
-            console.log('error');
-            console.log("Error: " + e);
-            this.errors.push(e.response)
-          });
-        this.$router.push({path: 'list', query: { page: this.pageNumber, size: this.pageSize, order: this.order.by, dir: this.order.dir }});
-      }
+    beforeRouteUpdate (to, from, next) {
+      this.$store.commit('setPageNumber',Number(to.query.page));
+      this.$store.commit('setPageSize',Number(to.query.size));
+      this.$store.commit('setSortSettings',{by:to.query.order,dir:to.query.dir});
+      this.getPage();
+      next()
     },
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

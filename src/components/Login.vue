@@ -146,13 +146,16 @@
       },
       signup(){
         this.$http.post('signup',{
-          username: this.input_signin.username,
-          password: this.input_signin.password
+          emailaddress: this.input_signin.username,
+          password: this.input_signin.password,
+          firstname: this.input_signin.firstname,
+          lastname: this.input_signin.surname,
         })
           .then(this.userExist=false)
           .catch(e => {
             this.userExist=true;
             console.log('error rejestracja');
+            console.log(e);
           })
       }
     }

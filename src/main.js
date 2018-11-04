@@ -35,7 +35,18 @@ new Vue({
   },
   template: '<App/>',
   create(){
-    store.commit('setAuth',localStorage.getItem('user-token'))
+    store.commit('setAuth',localStorage.getItem('user-token'));
+
+    axios.get('/menu/groups')
+      .then(response => {
+        // this.groups=response.data;
+        console.log("Grupy 1/2 main ");
+        store.commit('setCategories',response.data);
+        console.log("Grupy 2/2 main " + response.data);
+      })
+      .catch(e => {
+        console.log("Error: " + e);
+      });
   }
 });
 

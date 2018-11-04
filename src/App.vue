@@ -10,38 +10,43 @@
 
 
 <script>
-  import Foo from './components/MyFooter.vue'
   import Hea from './components/MyHeader.vue'
-  import router from './router'
-  import store from './store'
-  import axios from 'axios'
+
 
 
   export default {
     name: 'App',
     components: {
-      Foo,
       Hea,
     },
-    store,
-    router,
     data() {
       return {
+        groups:[]
       }
     },
-    created() {
-      const api = axios.create({
-        baseURL: 'http://localhost:8080',
-      });
+    beforeCreate(){
+      this.$http.get('/menu/groups')
+        .then(response => {
+          // this.groups=response.data;
+          console.log("Grupy 1/2 ");
+          this.$store.commit('setCategories',response.data);
+          console.log("Grupy 2/2 " + response.data);
+        })
+        .catch(e => {
+          console.log("Error: " + e);
+        });
 
-      api.get('/shoppingcart/totalquantity')
+      this.$http.get('/shoppingcart/totalquantity')
         .then(response => {
           this.$store.state.count=response.data;
           console.log('Pobrano ilośc produktów w koszyku: ' + this.products);
         })
         .catch(e => {
           console.log("Error: " + e);
-        })
+        });
+    },
+    created() {
+
     }
   }
 </script>

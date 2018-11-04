@@ -207,18 +207,53 @@
         },
         pay(){
           console.log("pay");
-          axios({
-            method: 'POST',
-            url: 'https://secure.payu.com/api/v2_1/orders/',
+          var api=axios.create({
+            // url: '/proba/pl/standard/user/oauth/authorize',
             headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer 3e5cac39-7e38-4139-8fd6-30adc06a61bd'
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Basic QVNKdHQzZE5LLTlPakxLSE9pRVhmWEtWM053SXlNaW5NeW15LW1zazlSSWphSllsMnBCQ214WEMzYjRsMDU4VEdnUDRTN1ZIZVlKdFpDR3g6RUJMUjI1T2FmajB1RUtHRFVKVU1VTmdZelY4WHNuRll5d1ZUcXNYRXNKUmd6bkhlMTBuUmpuRjMyTnR2M0YxZmctOV82aGxfYnZ1SWFPeWY',
             },
-            body: "{  \"notifyUrl\": \"https://your.eshop.com/notify\",  \"customerIp\": \"127.0.0.1\",  \"merchantPosId\": \"145227\",  \"description\": \"RTV market\",  \"currencyCode\": \"PLN\",  \"totalAmount\": \"21000\",  \"products\": [    {      \"name\": \"Wireless mouse\",      \"unitPrice\": \"15000\",      \"quantity\": \"1\"    },    {      \"name\": \"HDMI cable\",      \"unitPrice\": \"6000\",      \"quantity\": \"1\"    }  ]}"
-          }).then(function (response) {
+            // data: {
+            //   grant_type: 'client_credentials'
+            // }
+            auth:{
+              client_id:'ASJtt3dNK-9OjLKHOiEXfXKV3NwIyMinMymy-msk9RIjaJYl2pBCmxXC3b4l058TGgP4S7VHeYJtZCGx',
+              secret:'EBLR25Oafj0uEKGDUJUMUNgYzV8XsnFYywVTqsXEsJRgznHe10nRjnF32Ntv3F1fg-9_6hl_bvuIaOyf',
+              },
+            form: { grant_type: 'client_credentials' }
+            });
+
+          api.post('https://api.sandbox.paypal.com/v1/oauth2/token',
+            // headers:
+            //   {
+            //     'Authorization': 'Basic MTQ1MjI3OjEyZjA3MTE3NGNiN2ViNzlkNGFhYzViYzJmMDc1NjNm',
+            //     'Content-Type': 'application/x-www-form-urlencoded',
+            //   },
+            // data: {
+            //       'grant_type': 'client_credentials'
+            //     }
+            // auth:{
+            //   client_id:'300746',
+            //   client_secret:'2ee86a66e5d97e3fadc400c9f19b065d',
+            // },
+            // {
+            //   params:{
+            //     grant_type:'client_credentials',
+            // }}
+          ).then((response) =>{
             console.log("odpowiedz: "+response.data)
-            // response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
-          });
+          }).catch(e=>{
+              console.log("pay-error");
+              console.log(e);
+            });
+
+
+          // var data = {
+          //   "grant_type": "client_credentials",
+          //   "client_id": '145227',
+          //   "client_secret": '12f071174cb7eb79d4aac5bc2f07563f'
+          // };
+          // axios.post('https://secure.snd.payu.com/pl/standard/user/oauth/authorize',
         },
       },
       filters: {

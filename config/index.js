@@ -11,13 +11,28 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/*',
     proxyTable: {
-      // '/': {
-      //   target: 'http://localhost:8080',
-      //   ws: true,
-      //   changeOrigin: true
-      // }
+      '/proba': {
+        target: 'https://secure.payu.com',
+        changeOrigin: true,
+        ws: true,
+        secure: true,
+        pathRewrite: {
+          '^/proba': ''
+        }
+      },
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+    // '/': {
+    //   target: 'http://localhost:8080',
+    //   ws: true,
+    //   changeOrigin: true
+    // }
     },
-
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Admin from '@/components/Admin'
 import ProductDetail from '@/components/ProductDetail'
 import ProductList from '@/components/ProductList'
 import UserAccount from '@/components/UserAccount'
@@ -15,8 +16,9 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/:sex?',
       name: 'Home',
+      title: "Home",
       component: Home
     },
     {
@@ -25,7 +27,7 @@ export default new Router({
       component: ProductDetail
     },
     {
-      path: '/list',
+      path: '/:group/:category/:subcategory?',
       name: 'Product List',
       component: ProductList,
       props: (route) => ({
@@ -65,6 +67,17 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin,
+      meta: {
+        requiresAuth: true
+      },
+      child:[
+
+      ]
     },
     {
       path: '/404',
