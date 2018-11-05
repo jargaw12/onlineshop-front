@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="uk-container">
       <div class="uk-margin-medium-top">
         <vk-tabs align="justify">
           <vk-tabs-item title="Adres">

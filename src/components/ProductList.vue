@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-container">
     <br>
     <div class="uk-grid">
       <div class="uk-width-1-4@m">
@@ -197,9 +197,10 @@
         return this.$store.getters.getSubcategory
       },
       path(){
-        if(this.subcategory === undefined)
-          return '/'+this.category.id;
-        else return '/'+this.category.id+'/'+this.subcategory.id;
+       var path = '/products/'+this.category.id;
+        if(this.subcategory !== undefined)
+          path+='/'+this.subcategory.id;
+         return path;
       },
       pathString(){
         var path='/'+this.group.name.toLowerCase()+'/'+this.category.categoryname.name.toLowerCase();

@@ -1,28 +1,17 @@
 <template>
-  <div id="app">
-        <div>
-          <hea></hea>
-          <router-view/>
-        </div>
-        <!--<foo></foo>-->
-      </div>
+  <div class="uk-container">
+    <hea></hea>
+    <router-view></router-view>
+  </div>
 </template>
 
-
 <script>
-  import Hea from './components/MyHeader.vue'
-
-
+  import Hea from './MyHeader.vue'
 
   export default {
-    name: 'App',
+    name: "Client",
     components: {
       Hea,
-    },
-    data() {
-      return {
-        groups:[]
-      }
     },
     beforeCreate(){
       this.$http.get('/menu/groups')
@@ -45,12 +34,9 @@
           console.log("Error: " + e);
         });
     },
-    created() {
-
-    }
   }
 </script>
 
-<style>
+<style scoped>
 
 </style>

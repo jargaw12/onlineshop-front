@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-container">
   <br><br>
     <div class="uk-child-width-1-2@s uk-text-center" uk-grid>
       <div>

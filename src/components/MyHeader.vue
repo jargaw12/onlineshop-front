@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-container">
     <!--<vk-offcanvas-content>-->
       <!--<vk-navbar transparent>-->
         <!--<vk-navbar-nav class="uk-visible@m" slot="left">-->
@@ -124,20 +124,27 @@
         </div>
         <div class="uk-navbar-right"><div>
           <ul class="uk-navbar-nav">
-            <li><a href="/login">
+            <li v-if="!authenticated"><a href="/login">
               <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: user"></span>
               <span class="uk-visible@m">Zaloguj</span></a></li>
+            <li v-if="authenticated"><a href="/account">
+              <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: user"></span>
+              <span class="uk-visible@m">Konto</span></a></li>
             <li><a href="/cart">
               <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: cart"></span>
               <span class="uk-hidden@m">({{count}})</span>
               <span class="uk-visible@m">Koszyk ({{count}})</span>
-
             </a>
+            </li>
+            <li>
+              <a @click="logout">
+                <span class="uk-icon uk-margin-small-right" uk-icon="icon: sign-out"></span>
+              </a>
             </li>
           </ul>
         </div></div>
 
-        <!--</div>-->
+        <!-- Mobile menu -->
       </nav>
       <nav class="uk-navbar-container uk-margin uk-navbar-transparent uk-visible@m" uk-navbar>
         <div class="uk-navbar-center">

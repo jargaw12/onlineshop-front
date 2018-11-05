@@ -16,7 +16,8 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/:sex?',
+      path: '/',
+      // path: '/:sex?',
       name: 'Home',
       title: "Home",
       component: Home

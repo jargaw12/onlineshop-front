@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="uk-container">
     <br>
     <vk-card>
       <div class="uk-margin-medium-top">

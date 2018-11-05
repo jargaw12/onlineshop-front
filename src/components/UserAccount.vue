@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-container">
     <h3 class="uk-text-center">Twoje konto</h3>
     <section>
       <h4>Zamówienia</h4>

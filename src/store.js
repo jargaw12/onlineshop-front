@@ -103,12 +103,14 @@ export default new Vuex.Store({
         .filter(group=>group.id===state.menu.activeGroup)[0];
     },
     getCategory: state =>{
-      return state.menu.categories
+      if(state.activeGroup!==null)
+        return state.menu.categories
         .filter(group=>group.id===state.menu.activeGroup)[0].categories
         .filter(cat=>cat.id===state.menu.activeCategory)[0];
     },
     getSubcategory: state =>{
-      return state.menu.categories
+      if(state.activeCategory!==null)
+        return state.menu.categories
         .filter(group=>group.id===state.menu.activeGroup)[0].categories
         .filter(cat=>cat.id===state.menu.activeCategory)[0].subcategories
         .filter(sub=>sub.id===state.menu.activeSubcategory)[0];

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-container">
   <section>
     <h5>Szczegóły zamówienia</h5>
     <table>

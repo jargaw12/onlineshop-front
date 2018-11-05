@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-container">
     <br>
     <h1 class="uk-text-center">ERROR 404</h1>
     <h3 class="uk-text-center">Page not found</h3>
