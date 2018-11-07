@@ -136,7 +136,7 @@
               <span class="uk-visible@m">Koszyk ({{count}})</span>
             </a>
             </li>
-            <li>
+            <li v-if="authenticated">
               <a @click="logout">
                 <span class="uk-icon uk-margin-small-right" uk-icon="icon: sign-out"></span>
               </a>

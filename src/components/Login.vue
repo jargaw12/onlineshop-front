@@ -11,16 +11,16 @@
               <fieldset class="uk-fieldset uk-first-column">
                 <div class="uk-grid-small uk-child-width-1-1 uk-grid uk-container">
                   <div class="uk-first-column"><label>
-                    <div class="uk-form-label">Login/e-mail</div>
-                    <div class="uk-inline uk-width-1-1 uk-width-2-3@m">
+                    <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container uk-text-left uk-form-label">Login/e-mail</div>
+                    <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container">
                       <vk-icon class="uk-form-icon" icon="user"></vk-icon>
                       <input class="uk-input" type="text" placeholder="Login lub e-mail" v-model="input_login.username">
                     </div>
                   </label>
                   </div>
                   <div><label>
-                    <div class="uk-form-label">Hasło</div>
-                    <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-container">
+                    <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container uk-text-left uk-form-label">Hasło</div>
+                    <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container">
                       <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
                       <input class="uk-input" type="password" placeholder="Hasło" v-model="input_login.password" @keyup.enter="login(input_login)">
                     </div>
@@ -32,7 +32,7 @@
             </form>
             <br><br>
             <div class="mybtn">
-              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="login(input_login)" >Zaloguj</button>
+              <button class="uk-button uk-button-secondary uk-width-1-1 uk-width-2-3@s uk-width-1-2@l" type="submit" @click="login(input_login)" >Zaloguj</button>
             </div>
             <a class=" uk-width-1-2 c-right">Zapomniałeś hasła?</a>
           </vk-tabs-item>
@@ -40,21 +40,24 @@
           <vk-tabs-item title="Zarejestruj">
             <form action="Home.vue">
               <div class="uk-margin">
-                <div class="uk-inline uk-width-2-3">
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container uk-text-left uk-form-label">Imię</div>
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container">
                   <vk-icon class="uk-form-icon" icon="user"></vk-icon>
                   <input class="uk-input" type="text" placeholder="Imię" v-model="input_signin.firstname">
                 </div>
               </div>
 
               <div class="uk-margin">
-                <div class="uk-inline uk-width-2-3">
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container uk-text-left uk-form-label">Nazwisko</div>
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container">
                   <vk-icon class="uk-form-icon" icon="users"></vk-icon>
                   <input class="uk-input" type="text" placeholder="Nazwisko" v-model="input_signin.surname">
                 </div>
               </div>
 
               <div class="uk-margin">
-                <div class="uk-inline uk-width-2-3">
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container uk-text-left uk-form-label">Adres e-mail</div>
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container">
                   <vk-icon class="uk-form-icon" icon="mail"></vk-icon>
                   <input class="uk-input" type="text" placeholder="E-mail" v-model="input_signin.username">
                 </div>
@@ -65,7 +68,8 @@
               </div>
 
               <div class="uk-margin">
-                <div class="uk-inline uk-width-2-3">
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container uk-text-left uk-form-label">Hasło</div>
+                <div class="uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l uk-container">
                   <vk-icon class="uk-form-icon" icon="lock"></vk-icon>
                   <input class="uk-input" type="password" placeholder="Hasło" v-model="input_signin.password">
                 </div>
@@ -73,7 +77,7 @@
             </form>
             <br><br>
             <div class="mybtn">
-              <button class="uk-button uk-button-secondary uk-width-2-3" type="submit" @click="signup">Zarejestruj</button>
+              <button class="uk-button uk-button-secondary uk-inline uk-width-1-1 uk-width-2-3@s uk-width-1-2@l" type="submit" @click="signup">Zarejestruj</button>
             </div>
           </vk-tabs-item>
         </vk-tabs>
@@ -203,28 +207,7 @@
 </script>
 
 <style scoped>
-  /*.uk-card-body {*/
-  /*padding-left: 15%;*/
-  /*padding-right: 15%;*/
-  /*}*/
-  /*.uk-margin{*/
-  /*text-align: center;*/
-  /*}*/
-  /*!*.uk-margin .label{*!*/
-  /*!*text-align: left;*!*/
-  /*!*padding-left: 19%;*!*/
-  /*!*line-height: 0em ;*!*/
-  /*!*}*!*/
-  /*.uk-input{*/
-  /*width: 100%;*/
-  /*}*/
-
-  /*.mybtn{*/
-  /*text-align: center;*/
-  /*}*/
-  /*.c-right{*/
-  /*padding-right: 19%;*/
-  /*text-align: right;*/
-  /*}*/
-
+  .uk-container{
+    text-align: center;
+  }
 </style>
