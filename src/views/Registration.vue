@@ -3,8 +3,8 @@
     <div class="uk-card uk-card-default uk-width-1-2@m">
       <div class="uk-card-body">
         <ul class="uk-child-width-expand" uk-tab uk-switcher="connect: .switcher-container">
-          <li class="uk-active"><a href="#">Zaloguj</a></li>
-          <li><a href="#">Zarejestruj</a></li>
+          <li class="uk-active"><a>Zaloguj</a></li>
+          <li><a>Zarejestruj</a></li>
         </ul>
         <h4>Container 1</h4>
 
@@ -22,7 +22,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
       </div>
       <div class="uk-card-footer">
-        <a href="#" class="uk-button uk-button-text">Read more</a>
+        <a class="uk-button uk-button-text">Read more</a>
       </div>
     </div>
   </div>

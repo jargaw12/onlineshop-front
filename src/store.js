@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     count: 0,
     page:{
-      size:3,
+      size:4,
       number:1,
       total:0,
       order:{
@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     // authenticated: true,
     token: localStorage.getItem('user-token') || '',
-    username: null
+    // username: localStorage.getItem('username') || '',
   },
   mutations: {
     plus (state, n) {
@@ -72,25 +72,33 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    authRequest(user){
-      http.post('/oauth/token', user)
-        .then(resp => {
-          const token = resp.data.token;
-          localStorage.setItem('user-token', token);
-          http.defaults.headers.common['Authorization'] = 'Bearer ' + token
-        })
-        .catch(err => {
-          localStorage.removeItem('user-token');
-        })
-    },
+    // authRequest(user){
+    //   http.post('/oauth/token', user)
+    //     .then(resp => {
+    //       const token = resp.data.token;
+    //       localStorage.setItem('user-token', token);
+    //       localStorage.setItem('user-token', token);
+    //       http.defaults.headers.common['Authorization'] = 'Bearer ' + token
+    //     })
+    //     .catch(err => {
+    //       localStorage.removeItem('user-token');
+    //     })
+    // },
     login(param){
       localStorage.setItem('user-token', param.token);
-      this.$store.commit('setUser', param.user.username);
+      sessionStorage.setItem('user-token', param.token);
+
+      // http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      // this.$store.commit('setUser', param.user.username);
       this.$store.commit('setAuth', true);
     },
     logout(){
       delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem('user-token');
+      localStorage.removeItem('username');
+      sessionStorage.removeItem('user-token');
+      sessionStorage.removeItem('username');
+      this.state.count = 0;
       this.commit('setAuth',false);
     }
   },
@@ -98,22 +106,20 @@ export default new Vuex.Store({
     isLoggedIn: state => {
       return state.token !== '';
     },
-    getGroup:state =>{
-      return state.menu.categories
-        .filter(group=>group.id===state.menu.activeGroup)[0];
-    },
-    getCategory: state =>{
-      if(state.activeGroup!==null)
-        return state.menu.categories
-        .filter(group=>group.id===state.menu.activeGroup)[0].categories
-        .filter(cat=>cat.id===state.menu.activeCategory)[0];
-    },
-    getSubcategory: state =>{
-      if(state.activeCategory!==null)
-        return state.menu.categories
-        .filter(group=>group.id===state.menu.activeGroup)[0].categories
-        .filter(cat=>cat.id===state.menu.activeCategory)[0].subcategories
-        .filter(sub=>sub.id===state.menu.activeSubcategory)[0];
-    }
+    // getGroup:state =>{
+    //   return state.menu.categories
+    //     .filter(group=>group.id===state.menu.activeGroup)[0];
+    // },
+    // getCategory: state =>{
+    //     return state.menu.categories
+    //     .filter(group=>group.id===state.menu.activeGroup)[0].categories
+    //     .filter(cat=>cat.id===state.menu.activeCategory)[0];
+    // },
+    // getSubcategory: state =>{
+    //     return state.menu.categories
+    //     .filter(group=>group.id===state.menu.activeGroup)[0].categories
+    //     .filter(cat=>cat.id===state.menu.activeCategory)[0].subcategories
+    //     .filter(sub=>sub.id===state.menu.activeSubcategory)[0];
+    // }
   },
 });

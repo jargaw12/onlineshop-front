@@ -1,7 +1,7 @@
 <template>
   <div id="app">
         <div>
-          <hea></hea>
+          <!--<hea></hea>-->
           <router-view/>
         </div>
         <!--<foo></foo>-->
@@ -12,8 +12,6 @@
 <script>
   import Hea from './components/MyHeader.vue'
 
-
-
   export default {
     name: 'App',
     components: {
@@ -21,33 +19,9 @@
     },
     data() {
       return {
-        groups:[]
+
       }
     },
-    beforeCreate(){
-      this.$http.get('/menu/groups')
-        .then(response => {
-          // this.groups=response.data;
-          console.log("Grupy 1/2 ");
-          this.$store.commit('setCategories',response.data);
-          console.log("Grupy 2/2 " + response.data);
-        })
-        .catch(e => {
-          console.log("Error: " + e);
-        });
-
-      this.$http.get('/shoppingcart/totalquantity')
-        .then(response => {
-          this.$store.state.count=response.data;
-          console.log('Pobrano ilośc produktów w koszyku: ' + this.products);
-        })
-        .catch(e => {
-          console.log("Error: " + e);
-        });
-    },
-    created() {
-
-    }
   }
 </script>
 

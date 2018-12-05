@@ -11,15 +11,6 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/*',
     proxyTable: {
-      '/proba': {
-        target: 'https://secure.payu.com',
-        changeOrigin: true,
-        ws: true,
-        secure: true,
-        pathRewrite: {
-          '^/proba': ''
-        }
-      },
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
@@ -41,7 +32,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
@@ -86,5 +77,10 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
+  },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
+    }
   }
 }
