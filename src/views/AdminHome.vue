@@ -1,8 +1,7 @@
 <template>
-    <div>
-      <h1>
-        Admin home
-      </h1>
+    <div class="uk-text-center">
+      <h1>Ubrani</h1>
+      <h3>Panel administracyjny</h3>
     </div>
 </template>
 
@@ -13,5 +12,7 @@
 </script>
 
 <style scoped>
-
+  div{
+    align-self: center
+  }
 </style>

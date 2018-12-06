@@ -20,7 +20,7 @@
             <ul class="uk-iconnav">
               <li><a href="#editProduct" @click="editProduct(index)" uk-toggle uk-icon="icon: pencil" uk-tooltip="title: Edytuj; delay: 400"></a>
               </li>
-              <li><a uk-icon="icon: close" @click="removeProduct(index)" uk-tooltip="title: Usuń; delay: 400"></a></li>
+              <li><a uk-icon="icon: close" @click="removeProduct(product.id)" uk-tooltip="title: Usuń; delay: 400"></a></li>
             </ul>
           </td>
         </tr>
@@ -287,7 +287,7 @@
     methods: {
       removeProduct(id){
         console.log("Removing", id);
-        this.$http.delete('/products/delete/' + id)
+        this.$http_admin.delete('/products/delete/' + id)
           .then(response => {
             this.products.splice(id,1);
             this.getPage();
@@ -303,11 +303,12 @@
       saveProduct() {
         if (this.activeSubcategory != null) {
           this.product.subcategoryid = this.activeSubcategory;
-          this.$http.post('/products/product', this.product)
+          this.$http_admin.post('/products/product', this.product)
             .then(response => {
               console.log("add product 1 ");
               this.categoryDictionary.group = response.data;
               console.log("add product 2" + response.data);
+              UIkit.modal('#addProduct').hide();
             })
             .catch(e => {
               console.log("add product error: " + e);
@@ -326,7 +327,7 @@
         });
       },
       getPage(){
-        this.$http.get('/products/all' ,{ params: { page: this.pageNumber, size:this.pageSize} })
+        this.$http_admin.get('/products/all' ,{ params: { page: this.pageNumber, size:this.pageSize} })
           .then(response => {
             this.pageTotal=response.data.totalElements;
             this.products = response.data.content;
@@ -347,7 +348,7 @@
       }
     },
     created() {
-      this.$http.get('/menu/groups')
+      this.$http_admin.get('/menu/groups')
         .then(response => {
           this.categoryDictionary.group = response.data;
         })

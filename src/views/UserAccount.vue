@@ -21,10 +21,10 @@
           <div class="uk-modal-body">
             <form class="uk-form-stacked">
               <div class="uk-grid-medium uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                <fieldset class="uk-fieldset uk-first-column">
+                <fieldset class="uk-fieldset">
                   <legend class="uk-h4">Dane osobowe</legend>
                   <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s uk-grid" uk-grid="">
-                    <div class="uk-first-column">
+                    <div >
                       <label>
                         <div class="uk-form-label uk-text-left" :class="{ 'uk-text-danger': errors.has('email') }">Adres
                           e-mail
@@ -46,7 +46,7 @@
                     <div class="uk-width-1-1 uk-width-1-2@s">
                       <label>
                         <div class="uk-form-label uk-text-left" :class="{ 'uk-text-danger': errors.has('imie') }">Imię</div>
-                        <input class="uk-input" :class="{ 'uk-form-danger': errors.has('numer komórkowy') }" type="text"
+                        <input class="uk-input" :class="{ 'uk-form-danger': errors.has('imie') }" type="text"
                                v-model="user.firstname" v-validate="'required|alpha'" name="imie">
                       </label>
                       <p class="error-message">{{ errors.first('imie') }}</p>
@@ -60,10 +60,10 @@
                     </div>
                   </div>
                 </fieldset>
-                <fieldset class="uk-fieldset uk-grid-margin uk-first-column">
+                <fieldset class="uk-fieldset uk-grid-margin">
                   <legend class="uk-h4">Dane adresowe</legend>
                   <div class="uk-grid-small uk-grid" uk-grid="">
-                    <div class="uk-width-expand uk-first-column"><label>
+                    <div class="uk-width-expand"><label>
                       <div class="uk-form-label uk-text-left" :class="{ 'uk-text-danger': errors.has('miasto') }">Miasto</div>
                       <input class="uk-input" :class="{ 'uk-form-danger': errors.has('miasto') }" type="text" v-model="user.address.city" v-validate="'required|alpha_dash'" name="miasto"></label>
                       <p class="error-message">{{ errors.first('miasto') }}</p>
@@ -77,13 +77,13 @@
                     </div>
                   </div>
                   <div class="uk-grid-small uk-grid" uk-grid="">
-                    <div class="uk-width-expand uk-first-column"><label>
+                    <div class="uk-width-expand"><label>
                       <div class="uk-form-label uk-text-left" :class="{ 'uk-text-danger': errors.has('ulica') }">Ulica</div>
                       <input class="uk-input" :class="{ 'uk-form-danger': errors.has('ulica') }" type="text" v-model="user.address.street" v-validate="'required'" name="ulica"></label></div>
                     <div class="uk-width-1-3 uk-width-1-4@s"><label>
                       <p class="error-message">{{ errors.first('ulica') }}</p>
                       <div class="uk-form-label uk-text-left" :class="{ 'uk-text-danger': errors.has('nr domu') }">Nr domu</div>
-                      <input class="uk-input" :class="{ 'uk-form-danger': errors.has('nr domu') }" type="text" v-model="user.address.streetnumber" v-validate="'required|devimal'" name="nr domu"></label></div>
+                      <input class="uk-input" :class="{ 'uk-form-danger': errors.has('nr domu') }" type="text" v-model="user.address.streetnumber" v-validate="'required|decimal'" name="nr domu"></label></div>
                     <div class="uk-width-1-3 uk-width-1-4@s"><label>
                       <p class="error-message">{{ errors.first('nr domu') }}</p>
                       <div class="uk-form-label uk-text-left">Nr mieszkania</div>
@@ -138,7 +138,7 @@
           <td class="uk-table-shrink">{{index}}</td>
           <td><a class="uk-link-reset" @click="toOrder(order.id)">{{order.id}}</a></td>
           <td>{{order.createdtime}}</td>
-          <th>{{order.deliveryByDeliveryid.deliverydictionaryByDeliverytype.name}}</th>
+          <th>{{order.deliveryByDeliveryid.deliveryTypeByDeliverytype.name}}</th>
           <td>{{order.totalprice|priceFormat}} zł</td>
         </tr>
         </tbody>
@@ -173,15 +173,19 @@
         this.url = "/order/" + item.orderID;
       },
       savePersonData() {
-        this.$http.post("/account/change", this.user)
-          .then((data) => {
-            console.log("change data ok")
-            this.user = data;
-            UIkit.modal('#editData').hide();
-          })
-          .catch((e) => {
-            console.log("change data error: " + e.data())
-          })
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            this.$http.post("/account/change", this.user)
+              .then((data) => {
+                console.log("change data ok")
+                this.user = data;
+                UIkit.modal('#editData').hide();
+              })
+              .catch((e) => {
+                console.log("change data error: " + e.data())
+              })
+          }
+        });
       },
       setOrderToActive(order) {
         this.activeOrder = order;

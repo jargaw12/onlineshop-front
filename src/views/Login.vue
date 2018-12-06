@@ -125,18 +125,7 @@
     },
     methods:{
       login(input_login) {
-        // const params = new URLSearchParams();
-        // params.append('grant_type', 'password');
-        // params.append('username', input_login.username);
-        // params.append('password', input_login.password);
-        // axios({
-        //   method:'post',
-        //   url:'http://localhost:8080/oauth/token',
-        //   auth:{username:'frontclient',password: 'frontpassword'},
-        //   // headers:{"Content-Type": "application/x-www-form-urlencoded"},
-        //   data:params,
-        // })
-        this.$validator.validateAll()
+        this.$validator.validateAll().then(() => {
         // if (!this.errors.any()) {
           this.logging = true;
           this.$http.post('oauth/token', {}, {
@@ -172,7 +161,7 @@
             if (error.response.status===400)
               this.error = "Błędny login lub hasło";
           });
-        // }
+        });
       },
       signup(){
         this.$validator.validateAll()
@@ -194,46 +183,6 @@
         }
       }
     }
-
-    // signup(context, creds, redirect) {
-    //   context.$http.post(SIGNUP_URL, creds, (data) => {
-    //     localStorage.setItem('id_token', data.id_token)
-    //     localStorage.setItem('access_token', data.access_token)
-    //
-    //     this.user.authenticated = true
-    //
-    //     if(redirect) {
-    //       router.go(redirect)
-    //     }
-    //
-    //   }).error((err) => {
-    //     context.error = err
-    //   })
-    // },
-    //
-    // // To log out, we just need to remove the token
-    // logout() {
-    //   localStorage.removeItem('id_token')
-    //   localStorage.removeItem('access_token')
-    //   this.user.authenticated = false
-    // },
-    //
-    // checkAuth() {
-    //   var jwt = localStorage.getItem('id_token')
-    //   if(jwt) {
-    //     this.user.authenticated = true
-    //   }
-    //   else {
-    //     this.user.authenticated = false
-    //   }
-    // },
-    //
-    // // The object to be passed as a header for authenticated requests
-    // getAuthHeader() {
-    //   return {
-    //     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    //   }
-    // }
   }
 </script>
 

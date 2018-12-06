@@ -103,7 +103,7 @@
         }
       },
       created() {
-        this.$http.get('/menu/groups')
+        this.$http_admin.get('/menu/groups')
           .then(response => {
             this.categoryDictionary.group = response.data;
           })

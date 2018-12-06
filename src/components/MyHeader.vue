@@ -35,7 +35,7 @@
         </div>
         <div class="uk-navbar-right"><div>
           <ul class="uk-navbar-nav">
-            <li v-if="!authenticated"><router-link :to="{name:'login'}">
+            <li v-if="!authenticated"><router-link :to="{name:'signin'}">
               <span class="uk-icon uk-margin-small-right uk-hidden@m" uk-icon="icon: user"></span>
               <span class="uk-visible@m">Zaloguj</span></router-link></li>
             <li v-if="authenticated"><router-link :to="{name:'account'}">
@@ -132,6 +132,7 @@
     methods:{
       logout() {
         this.$store.dispatch('logout');
+        this.$router.push({name:'home'})
         // localStorage.removeItem('user-token');
         // delete axios.defaults.headers.common["Authorization"];
         // this.$store.commit('setAuth',false);

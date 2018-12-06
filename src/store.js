@@ -26,6 +26,7 @@ export default new Vuex.Store({
     },
     // authenticated: true,
     token: localStorage.getItem('user-token') || '',
+    adminToken: localStorage.getItem('admin-token') || '',
     // username: localStorage.getItem('username') || '',
   },
   mutations: {
@@ -43,6 +44,13 @@ export default new Vuex.Store({
         state.token = localStorage.getItem('user-token');
       else
         state.token = '';
+      // this.state.authenticated = have === false;
+    },
+    setAdminAuth(state,have){
+      if (have)
+        state.adminToken = localStorage.getItem('admin-token');
+      else
+        state.adminToken = '';
       // this.state.authenticated = have === false;
     },
     setCategories(state,categories){
@@ -86,11 +94,11 @@ export default new Vuex.Store({
     // },
     login(param){
       localStorage.setItem('user-token', param.token);
-      sessionStorage.setItem('user-token', param.token);
-
-      // http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      // this.$store.commit('setUser', param.user.username);
       this.$store.commit('setAuth', true);
+    },
+    adminLogin(param){
+      localStorage.setItem('admin-token', param.token);
+      this.$store.commit('setAdminAuth', true);
     },
     logout(){
       delete axios.defaults.headers.common["Authorization"];
@@ -100,11 +108,19 @@ export default new Vuex.Store({
       sessionStorage.removeItem('username');
       this.state.count = 0;
       this.commit('setAuth',false);
+    },
+    adminLogout(){
+      delete axios.defaults.headers.common["Authorization"];
+      localStorage.removeItem('admin-token');
+      this.commit('setAdminAuth',false);
     }
   },
   getters : {
     isLoggedIn: state => {
       return state.token !== '';
+    },
+    adminIsLoggedIn: state => {
+      return state.adminToken !== '';
     },
     // getGroup:state =>{
     //   return state.menu.categories

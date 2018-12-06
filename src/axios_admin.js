@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
+const axi = axios.create({
   baseURL: 'http://localhost:8080',
   headers:{
     'Access-Control-Allow-Origin': '*',
@@ -8,12 +8,12 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
+axi.interceptors.request.use(
   (config) => {
-    let token = localStorage.getItem('user-token')
+    let adminToken = localStorage.getItem('admin-token')
 
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${ token }`
+    if (adminToken) {
+      config.headers['Authorization'] = `Bearer ${ adminToken }`
     }
 
     return config
@@ -24,4 +24,4 @@ api.interceptors.request.use(
   }
 )
 
-export default api;
+export default axi;

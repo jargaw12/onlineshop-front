@@ -11,9 +11,15 @@ import Login from '@/views/Login'
 import PageNotFound from '@/views/PageNotFound'
 
 import Admin from '@/views/Admin'
+import AdminHome from '@/views/AdminHome'
 import Client from '@/views/Client'
 import AddProduct from '@/views/AddProduct'
 import ThankPage from '@/views/ThankPage'
+import SignInSignUp from '@/views/SignInSignUp'
+import SignIn from '@/components/SignIn'
+import SignInOnly from '@/views/SignInOnly'
+import SignUp from '@/components/SignUp'
+
 
 
 Vue.use(Router)
@@ -26,6 +32,7 @@ export default new Router({
       path: '/',
       // name: 'client',
       component: Client,
+      name:'client',
       children: [
         {
           path: '',
@@ -81,27 +88,54 @@ export default new Router({
           name: 'login',
           component: Login
         },
+        {
+          path: '/signinup',
+          name: 'signinup',
+          component: SignInSignUp,
+          children:[
+            {
+              path: '/zaloguj',
+              name: 'signin',
+              component: SignIn,
+            },
+            {
+              path: '/zarejestruj',
+              name: 'signup',
+              component: SignUp,
+            },
+          ]
+        },
+        {
+          path: '/thankyou',
+          name: 'thank',
+          component: ThankPage
+        },
       ]
     },
     {
       path: '/admin',
       name: 'admin',
       component: Admin,
-      meta: {
-        requiresAuth: true
-      },
       children: [
+        {
+          path: '/',
+          name: 'adminHome',
+          component: AdminHome,
+        },
+        {
+          path: 'zaloguj',
+          name: 'adminSignIn',
+          component: SignInOnly,
+        },
         {
           path: 'product/add',
           name: 'addProduct',
           component: AddProduct,
+          meta: {
+            requiresAuth: true
+          },
         },
       ]
-    },
-    {
-      path: '/thankyou',
-      name: 'thank',
-      component: ThankPage
     },
     {
       path: '/404',

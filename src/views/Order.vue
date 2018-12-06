@@ -14,7 +14,7 @@
         </dl>
         <dl class="uk-description-list">
           <dt>Rodzaj dostawy</dt>
-          <dd>{{order.deliveryByDeliveryid.deliverycompanydictionaryByDeliverycompany.name}}</dd>
+          <dd>{{order.deliveryByDeliveryid.deliveryTypeByDeliverytype.name}}</dd>
           <dt>Koszt dostawy</dt>
           <dd>{{order.deliverycost}} zł</dd>
           <dt>Wartość zamówienia</dt>
@@ -34,7 +34,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(product,index) in order.orderdetailsById">
+      <tr v-for="(product,index) in order.orderItemById">
         <td class="uk-table-shrink"><img :src="product.productByProductid.image"></td>
         <td class="uk-table-expand">{{product.productByProductid.name}}</td>
         <th class="uk-table-middle">{{product.productByProductid.price|priceFormat}} zł</th>

@@ -99,7 +99,7 @@
             this.$http.post('/shoppingcart/add', userProduct)
               .then(response => {
                 this.$store.commit('plus', 1);
-                console.log("Dodano nowy produkt nr: " + id)
+                console.log("Dodano nowy produkt nr: " + userProduct.id)
                 UIkit.notification({
                   message: '<span uk-icon=\'icon: check\'></span>Dodano do koszyka',
                   timeout: 1000,
