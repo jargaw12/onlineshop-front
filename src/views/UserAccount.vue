@@ -115,7 +115,7 @@
         </div>
         <br>
         <div class="uk-text-center@m">
-          <button class="uk-button uk-button-secondary uk-margin-large-bottom" href="#editData" uk-toggle>Edyduj <span
+          <button class="uk-button uk-button-secondary uk-margin-large-bottom" href="#editData" uk-toggle>Edytuj <span
             uk-icon="icon: pencil"></span></button>
         </div>
       </div>

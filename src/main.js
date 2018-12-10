@@ -9,7 +9,7 @@ import store from './store.js'
 import Vuikit from 'vuikit'
 import VuikitIcons from '@vuikit/icons'
 // import '@vuikit/theme'
-import Vuelidate from 'vuelidate'
+// import Vuelidate from 'vuelidate'
 
 // import VeeValidate from 'vee-validate';
 // import VeeValidate from 'vee-validate';
@@ -27,7 +27,7 @@ Vue.prototype.$http = axios;
 Vue.prototype.$http_admin = axios_admin;
 
 
-Vue.use(Vuelidate)
+// Vue.use(Vuelidate)
 Vue.use(Vuikit);
 Vue.use(VuikitIcons);
 
