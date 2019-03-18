@@ -1,6 +1,17 @@
-# mailordercompany-front
+# Sklep internetowy / Online shop
 
-> A Vue.js project
+## Wykorzystane technologie i biblioteki
+
+* VueJS
+* Vue Router
+* Vuex
+* VeeValidate
+* UIkit
+* Axios
+
+## Screenshots
+<img src=https://github.com/jargaw12/onlineshop-front/blob/po_logowaniu/public/screen1.jpg height="350"/> <img src=https://github.com/jargaw12/onlineshop-front/blob/po_logowaniu/public/screen1(iPhone%206_7_8%20Plus)%20.png height="350"/>
+<img src=https://github.com/jargaw12/onlineshop-front/blob/po_logowaniu/public/screen2.jpg height="350"/>
 
 ## Build Setup
 
